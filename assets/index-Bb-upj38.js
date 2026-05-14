@@ -38014,7 +38014,7 @@ const skillCategories = [
   {
     title: "Databases & DevOps",
     emoji: "🛠️",
-    items: ["Docker", "Git/GitHub", "Postman", "AWS (EC2, S3)"]
+    items: ["Docker", "Git/GitHub", "Postman", "AWS"]
   }
 ];
 const emojiMap = {
@@ -38128,7 +38128,7 @@ function LeetCodeSection() {
   const ref = reactExports.useRef(null);
   const inView2 = useInView(ref, { once: true, margin: "-100px" });
   reactExports.useEffect(() => {
-    fetch("https://leetcode-stats-api.herokuapp.com/Anubhav9457").then((r2) => r2.json()).then((data) => {
+    fetch("https://leetcode-api-faisalshohag.vercel.app/Anubhav9457").then((r2) => r2.json()).then((data) => {
       setStats({
         totalSolved: data.totalSolved ?? FALLBACK.totalSolved,
         easySolved: data.easySolved ?? FALLBACK.easySolved,
@@ -38267,13 +38267,13 @@ function LeetCodeSection() {
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
                         "a",
                         {
-                          href: "https://leetcode.com/u/Anubhav9457/",
+                          href: "https://codolio.com/profile/Anubhav2501",
                           target: "_blank",
                           rel: "noopener noreferrer",
                           className: "inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105",
                           style: { background: "#FFA116", color: "#1a1a1a" },
                           "data-ocid": "skills.leetcode.link",
-                          children: "View Profile ↗"
+                          children: "View Coding Profile ↗"
                         }
                       )
                     ] })
