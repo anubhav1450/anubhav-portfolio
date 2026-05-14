@@ -30900,9 +30900,10 @@ const experiences = [
     company: "Lighthouse Info Systems Pvt Ltd",
     period: "May 2025 – Jul 2025",
     bullets: [
-      "Built scalable e-commerce backend for product management, cart, and order processing, handling 500+ simulated requests.",
-      "Implemented JWT-based auth and optimized MongoDB schemas with indexing — boosted query performance by ~25–30%.",
-      "Achieved sub-200ms API response time with proper error handling and order lifecycle management."
+      "Developed backend modules for product management, cart operations, and order processing using Node.js, Express.js, and MongoDB.",
+      "Implemented secure JWT-based authentication and authorization while designing REST APIs and optimized database schemas for scalable application workflows.",
+      "Engineered order lifecycle management with validation, error handling, and reliable API integration for consistent backend functionality.",
+      "Technologies: Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman"
     ]
   }
 ];
@@ -31107,7 +31108,7 @@ function About() {
                                   children: [
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-foreground text-lg mb-1", children: "B.Tech in Computer Science and Engineering" }),
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-base font-semibold", children: "Government Engineering College Bharatpur, Rajasthan" }),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.5 · 8th Semester" }),
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.64" }),
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2 mt-3", children: [
                                       "DSA",
                                       "OS",
@@ -31543,7 +31544,7 @@ function Contact() {
                         },
                         children: [
                           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "📍" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Bharatpur, Rajasthan, India · Actively seeking full-time roles" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Shikohabad,Uttar Pradesh, India · Actively seeking full-time roles" })
                         ]
                       }
                     )
@@ -31763,9 +31764,9 @@ const footerLinks = [
   {
     heading: "Projects",
     links: [
-      { label: "E-Commerce Platform", href: "#" },
-      { label: "Task Manager App", href: "#" },
-      { label: "Portfolio CMS", href: "#" }
+      { label: "Real-Time-Collaborative Editor", href: "#" },
+      { label: "Hacker News Scraper", href: "#" }
+      // { label: "Portfolio CMS", href: "#" },
     ]
   }
 ];
@@ -31817,7 +31818,7 @@ function Footer() {
       ] }, col.heading)),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-foreground text-xs font-semibold uppercase tracking-widest mb-4", children: "Tech Stack" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: ["React", "TypeScript", "Node.js", "MongoDB", "Express"].map(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: ["Java", "React", "JavaScript", "Node.js", "MongoDB", "Express"].map(
           (tech) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-muted-foreground text-sm", children: tech }, tech)
         ) })
       ] })
@@ -37054,7 +37055,7 @@ const projects = [
       "AWS"
     ],
     liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    codeUrl: "https://github.com/anubhav1450/real-time-editor",
     featured: true
   },
   {
@@ -37063,8 +37064,8 @@ const projects = [
     longDescription: "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
     image: `${"/anubhav-portfolio/"}assets/generated/project-hackernews.dim_600x400.jpg`,
     tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
-    liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    liveUrl: "https://hacker-news-scraper-amgo.onrender.com/",
+    codeUrl: "https://github.com/anubhav1450/Hacker-News-Scraper",
     featured: true
   }
 ];
@@ -37387,7 +37388,10 @@ function RealResumeOverlay({
                             color: "white",
                             border: "none"
                           },
-                          onClick: () => window.print(),
+                          onClick: () => window.open(
+                            `${"/anubhav-portfolio/"}assets/anubhav-resume.pdf`,
+                            "_blank"
+                          ),
                           "data-ocid": "real_resume.print_button",
                           children: [
                             /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { className: "w-4 h-4" }),
@@ -38036,13 +38040,13 @@ const emojiMap = {
   "System Design": "🏗️"
 };
 const FALLBACK = {
-  totalSolved: 500,
-  easySolved: 140,
-  mediumSolved: 170,
-  hardSolved: 40,
-  acceptanceRate: 62.5,
-  ranking: 15e4,
-  totalQuestions: 3e3
+  totalSolved: 474,
+  easySolved: 263,
+  mediumSolved: 190,
+  hardSolved: 21,
+  acceptanceRate: 68.7,
+  ranking: 212171,
+  totalQuestions: 3930
 };
 function useCountUp(target, active, duration = 1500) {
   const [value, setValue] = reactExports.useState(0);
