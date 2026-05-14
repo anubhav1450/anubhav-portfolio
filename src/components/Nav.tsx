@@ -47,7 +47,7 @@ export default function Nav() {
       }`}
     >
       <div className="max-w-[1100px] mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Brand */}
+        {/* Brand
         <button
           type="button"
           onClick={() => handleNav("#home")}
@@ -60,7 +60,38 @@ export default function Nav() {
           <span className="font-bold text-foreground text-sm tracking-wide">
             Anubhav Kulshreshtha
           </span>
-        </button>
+        </button> */}
+        
+        {/* Brand */}
+<button
+  type="button"
+  onClick={() => handleNav("#home")}
+  className="flex items-center gap-3 group"
+  data-ocid="nav.link"
+>
+  {/* Cosmic Logo */}
+  <div className="relative flex items-center justify-center w-10 h-10">
+    {/* Outer orbit */}
+    <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-spin [animation-duration:10s]" />
+
+    {/* Inner glow */}
+    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 blur-[2px] opacity-80 group-hover:scale-110 transition-transform duration-300" />
+
+    {/* Center core */}
+    <div className="absolute w-3 h-3 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]" />
+  </div>
+
+  {/* Text */}
+  <div className="flex flex-col items-start leading-none">
+    <span className="text-sm font-semibold tracking-[0.25em] text-white uppercase">
+      ANUBHAV
+    </span>
+
+    <span className="text-[10px] text-cyan-300/70 tracking-[0.3em] uppercase">
+      Build • Scale • Evolve
+    </span>
+  </div>
+</button>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">

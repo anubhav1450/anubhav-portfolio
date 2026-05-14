@@ -15,9 +15,9 @@ const footerLinks = [
   {
     heading: "Projects",
     links: [
-      { label: "E-Commerce Platform", href: "#" },
-      { label: "Task Manager App", href: "#" },
-      { label: "Portfolio CMS", href: "#" },
+      { label: "Real-Time-Collaborative Editor", href: "#" },
+      { label: "Hacker News Scraper", href: "#" },
+      // { label: "Portfolio CMS", href: "#" },
     ],
   },
 ];
@@ -98,7 +98,7 @@ export default function Footer() {
               Tech Stack
             </p>
             <ul className="space-y-2">
-              {["React", "TypeScript", "Node.js", "MongoDB", "Express"].map(
+              {["Java", "React", "JavaScript", "Node.js", "MongoDB", "Express"].map(
                 (tech) => (
                   <li key={tech} className="text-muted-foreground text-sm">
                     {tech}
@@ -116,16 +116,9 @@ export default function Footer() {
             <span className="opacity-70">
               🌌 Imagined by{" "}
               <span className="text-foreground font-medium">Anubhav</span> ·
-              Forged in the stars by{" "}
+              Forged in the stars{" "}
             </span>
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(hostname)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              Caffeine
-            </a>
+           
             <span className="opacity-70"> ✦</span>
           </p>
         </div>

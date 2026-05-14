@@ -355,7 +355,7 @@ export default function Contact() {
           >
             <span>📍</span>
             <span>
-              Bharatpur, Rajasthan, India · Actively seeking full-time roles
+              Shikohabad,Uttar Pradesh, India · Actively seeking full-time roles
             </span>
           </div>
         </motion.div>

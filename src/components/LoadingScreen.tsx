@@ -79,7 +79,7 @@ export default function LoadingScreen({ onDone }: Props) {
         }}
       >
         <source
-          src="/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4"
+          src={`${import.meta.env.BASE_URL}/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4`}
           type="video/mp4"
         />
       </video>

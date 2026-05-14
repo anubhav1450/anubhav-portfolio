@@ -7,7 +7,7 @@ import PlanetBackground from "./PlanetBackground";
 const pills = [
   { icon: MapPin, label: "Bharatpur, Rajasthan, India" },
   { icon: Briefcase, label: "Fresher · Class of 2026" },
-  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.5" },
+  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.64" },
 ];
 
 const storyParagraphs = [
@@ -22,9 +22,10 @@ const experiences = [
     company: "Lighthouse Info Systems Pvt Ltd",
     period: "May 2025 – Jul 2025",
     bullets: [
-      "Built scalable e-commerce backend for product management, cart, and order processing, handling 500+ simulated requests.",
-      "Implemented JWT-based auth and optimized MongoDB schemas with indexing — boosted query performance by ~25–30%.",
-      "Achieved sub-200ms API response time with proper error handling and order lifecycle management.",
+      "Developed backend modules for product management, cart operations, and order processing using Node.js, Express.js, and MongoDB.",
+      "Implemented secure JWT-based authentication and authorization while designing REST APIs and optimized database schemas for scalable application workflows.",
+      "Engineered order lifecycle management with validation, error handling, and reliable API integration for consistent backend functionality.",
+      "Technologies: Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman",
     ],
   },
 ];
@@ -52,7 +53,7 @@ function AboutPhoto() {
         }}
       />
       <img
-        src="/assets/img4.png"
+        src={`${import.meta.env.BASE_URL}assets/img4.png`}
         alt="Anubhav Kulshreshtha"
         className="relative w-full max-w-sm rounded-2xl object-cover"
         style={{
@@ -219,7 +220,7 @@ export default function About() {
                         Government Engineering College Bharatpur, Rajasthan
                       </p>
                       <p className="text-muted-foreground text-sm mt-1">
-                        2022 – 2026 · CGPA 8.5 · 8th Semester
+                        2022 – 2026 · CGPA 8.64
                       </p>
                       <div className="flex flex-wrap gap-2 mt-3">
                         {[

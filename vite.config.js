@@ -19,6 +19,11 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: false,
+    rollupOptions: {
+    output: {
+    manualChunks: undefined,
+    },
+   },
   },
   css: {
     postcss: "./postcss.config.js",

@@ -29,7 +29,7 @@ function HeroPhoto() {
         }}
       />
       <img
-        src="/assets/portfolio-img1.png"
+        src={`${import.meta.env.BASE_URL}/assets/portfolio-img1.png`}
         alt="Anubhav Kulshreshtha"
         className="w-full max-w-md xl:max-w-lg object-contain drop-shadow-2xl"
         style={{ filter: "drop-shadow(0 0 28px oklch(0.55 0.22 280 / 0.45))" }}
@@ -125,9 +125,9 @@ export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <p className="text-primary font-semibold text-base tracking-widest uppercase mb-4">
+            {/* <p className="text-primary font-semibold text-base tracking-widest uppercase mb-4">
               Hello, World. I&apos;m a Software Engineer.
-            </p>
+            </p> */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-[1.05] mb-4">
               Hi, I&apos;m <span className="text-primary">Anubhav</span>
             </h1>
@@ -241,11 +241,12 @@ export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-            className="relative hidden md:block"
+            // className="relative hidden md:block"
+            className="relative flex justify-center mt-10 md:mt-0"
           >
             <HeroPhoto />
             {/* Floating badge */}
-            <div className="absolute -bottom-4 -left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card">
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card">
               <p className="text-sm text-muted-foreground">
                 Ready for Launch —
               </p>

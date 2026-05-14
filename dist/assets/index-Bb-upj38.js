@@ -21977,22 +21977,11 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$f = [
+const __iconNode$e = [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
   ["path", { d: "m12 5 7 7-7 7", key: "xquz4c" }]
 ];
-const ArrowRight = createLucideIcon("arrow-right", __iconNode$f);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$e = [
-  ["path", { d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", key: "jecpp" }],
-  ["rect", { width: "20", height: "14", x: "2", y: "6", rx: "2", key: "i6l2r4" }]
-];
-const Briefcase = createLucideIcon("briefcase", __iconNode$e);
+const ArrowRight = createLucideIcon("arrow-right", __iconNode$e);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -22000,11 +21989,10 @@ const Briefcase = createLucideIcon("briefcase", __iconNode$e);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$d = [
-  ["path", { d: "m18 16 4-4-4-4", key: "1inbqp" }],
-  ["path", { d: "m6 8-4 4 4 4", key: "15zrgr" }],
-  ["path", { d: "m14.5 4-5 16", key: "e7oirm" }]
+  ["path", { d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", key: "jecpp" }],
+  ["rect", { width: "20", height: "14", x: "2", y: "6", rx: "2", key: "i6l2r4" }]
 ];
-const CodeXml = createLucideIcon("code-xml", __iconNode$d);
+const Briefcase = createLucideIcon("briefcase", __iconNode$d);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -30900,9 +30888,10 @@ const experiences = [
     company: "Lighthouse Info Systems Pvt Ltd",
     period: "May 2025 – Jul 2025",
     bullets: [
-      "Built scalable e-commerce backend for product management, cart, and order processing, handling 500+ simulated requests.",
-      "Implemented JWT-based auth and optimized MongoDB schemas with indexing — boosted query performance by ~25–30%.",
-      "Achieved sub-200ms API response time with proper error handling and order lifecycle management."
+      "Developed backend modules for product management, cart operations, and order processing using Node.js, Express.js, and MongoDB.",
+      "Implemented secure JWT-based authentication and authorization while designing REST APIs and optimized database schemas for scalable application workflows.",
+      "Engineered order lifecycle management with validation, error handling, and reliable API integration for consistent backend functionality.",
+      "Technologies: Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman"
     ]
   }
 ];
@@ -30937,7 +30926,7 @@ function AboutPhoto() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/img4.png",
+            src: `${"/anubhav-portfolio/"}assets/img4.png`,
             alt: "Anubhav Kulshreshtha",
             className: "relative w-full max-w-sm rounded-2xl object-cover",
             style: {
@@ -31107,7 +31096,7 @@ function About() {
                                   children: [
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-foreground text-lg mb-1", children: "B.Tech in Computer Science and Engineering" }),
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-base font-semibold", children: "Government Engineering College Bharatpur, Rajasthan" }),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.5 · 8th Semester" }),
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.64" }),
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2 mt-3", children: [
                                       "DSA",
                                       "OS",
@@ -31543,7 +31532,7 @@ function Contact() {
                         },
                         children: [
                           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "📍" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Bharatpur, Rajasthan, India · Actively seeking full-time roles" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Shikohabad,Uttar Pradesh, India · Actively seeking full-time roles" })
                         ]
                       }
                     )
@@ -31763,9 +31752,9 @@ const footerLinks = [
   {
     heading: "Projects",
     links: [
-      { label: "E-Commerce Platform", href: "#" },
-      { label: "Task Manager App", href: "#" },
-      { label: "Portfolio CMS", href: "#" }
+      { label: "Real-Time-Collaborative Editor", href: "#" },
+      { label: "Hacker News Scraper", href: "#" }
+      // { label: "Portfolio CMS", href: "#" },
     ]
   }
 ];
@@ -31783,7 +31772,6 @@ const socialLinks = [
 ];
 function Footer() {
   const year = (/* @__PURE__ */ new Date()).getFullYear();
-  const hostname = typeof window !== "undefined" ? window.location.hostname : "";
   return /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { className: "border-t border-border", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-[1100px] mx-auto px-6 py-12", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-8 mb-10", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-span-2 md:col-span-1", children: [
@@ -31817,7 +31805,7 @@ function Footer() {
       ] }, col.heading)),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-foreground text-xs font-semibold uppercase tracking-widest mb-4", children: "Tech Stack" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: ["React", "TypeScript", "Node.js", "MongoDB", "Express"].map(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: ["Java", "React", "JavaScript", "Node.js", "MongoDB", "Express"].map(
           (tech) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-muted-foreground text-sm", children: tech }, tech)
         ) })
       ] })
@@ -31833,19 +31821,9 @@ function Footer() {
           "🌌 Imagined by",
           " ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-foreground font-medium", children: "Anubhav" }),
-          " · Forged in the stars by",
+          " · Forged in the stars",
           " "
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: `https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(hostname)}`,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            className: "text-primary hover:underline",
-            children: "Caffeine"
-          }
-        ),
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-70", children: " ✦" })
       ] })
     ] })
@@ -35065,7 +35043,7 @@ function HeroPhoto() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/portfolio-img1.png",
+            src: `${"/anubhav-portfolio/"}/assets/portfolio-img1.png`,
             alt: "Anubhav Kulshreshtha",
             className: "w-full max-w-md xl:max-w-lg object-contain drop-shadow-2xl",
             style: { filter: "drop-shadow(0 0 28px oklch(0.55 0.22 280 / 0.45))" }
@@ -35158,7 +35136,6 @@ function Hero({ onViewResume, onViewRealResume }) {
                   animate: { opacity: 1, y: 0 },
                   transition: { duration: 0.7, ease: "easeOut" },
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary font-semibold text-base tracking-widest uppercase mb-4", children: "Hello, World. I'm a Software Engineer." }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-[1.05] mb-4", children: [
                       "Hi, I'm ",
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary", children: "Anubhav" })
@@ -35262,10 +35239,10 @@ function Hero({ onViewResume, onViewRealResume }) {
                   initial: { opacity: 0, scale: 0.95 },
                   animate: { opacity: 1, scale: 1 },
                   transition: { duration: 0.8, ease: "easeOut", delay: 0.15 },
-                  className: "relative hidden md:block",
+                  className: "relative flex justify-center mt-10 md:mt-0",
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(HeroPhoto, {}),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-4 -left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-2 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Ready for Launch —" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base font-semibold text-primary", children: "Freelance & Full-time roles" })
                     ] })
@@ -35352,7 +35329,7 @@ function LoadingScreen({ onDone }) {
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "source",
               {
-                src: "/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4",
+                src: `${"/anubhav-portfolio/"}/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4`,
                 type: "video/mp4"
               }
             )
@@ -35560,11 +35537,18 @@ function Nav() {
             {
               type: "button",
               onClick: () => handleNav("#home"),
-              className: "flex items-center gap-2 group",
+              className: "flex items-center gap-3 group",
               "data-ocid": "nav.link",
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center group-hover:bg-primary/30 transition-colors", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CodeXml, { className: "w-4 h-4 text-primary" }) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-foreground text-sm tracking-wide", children: "Anubhav Kulshreshtha" })
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex items-center justify-center w-10 h-10", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 rounded-full border border-cyan-400/30 animate-spin [animation-duration:10s]" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 blur-[2px] opacity-80 group-hover:scale-110 transition-transform duration-300" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute w-3 h-3 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-start leading-none", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-semibold tracking-[0.25em] text-white uppercase", children: "ANUBHAV" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-cyan-300/70 tracking-[0.3em] uppercase", children: "Build • Scale • Evolve" })
+                ] })
               ]
             }
           ),
@@ -37043,7 +37027,7 @@ const projects = [
     title: "Real Time Collaborative Code Editor",
     description: "A real-time collaborative code editor supporting multi-user simultaneous editing, live code execution, and Docker-based deployment on AWS ECS. Features conflict-free sync using Yjs CRDT, Monaco Editor for rich code editing experience, and Socket.io for real-time communication.",
     longDescription: "Built a production-grade collaborative code editor where multiple developers can code together simultaneously. Uses Yjs CRDT for conflict-free real-time document sync, Monaco Editor (same as VS Code) for a rich coding experience, and Socket.io for WebSocket communication. Containerized with Docker and deployed on AWS ECS for scalability.",
-    image: "/assets/generated/project-collab-editor.dim_600x400.jpg",
+    image: `${"/anubhav-portfolio/"}assets/generated/project-collab-editor.dim_600x400.jpg`,
     tags: [
       "React",
       "Node.js",
@@ -37054,17 +37038,17 @@ const projects = [
       "AWS"
     ],
     liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    codeUrl: "https://github.com/anubhav1450/real-time-editor",
     featured: true
   },
   {
     title: "Hacker News Scraper",
     description: "A full-stack web application that scrapes Hacker News for the latest stories, with user authentication, bookmarking, and advanced search. Built with a Node.js backend using Cheerio for scraping and a React frontend.",
     longDescription: "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
-    image: "/assets/generated/project-hackernews.dim_600x400.jpg",
+    image: `${"/anubhav-portfolio/"}assets/generated/project-hackernews.dim_600x400.jpg`,
     tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
-    liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    liveUrl: "https://hacker-news-scraper-amgo.onrender.com/",
+    codeUrl: "https://github.com/anubhav1450/Hacker-News-Scraper",
     featured: true
   }
 ];
@@ -37387,7 +37371,10 @@ function RealResumeOverlay({
                             color: "white",
                             border: "none"
                           },
-                          onClick: () => window.print(),
+                          onClick: () => window.open(
+                            `${"/anubhav-portfolio/"}assets/Anubhav_Resume_.pdf`,
+                            "_blank"
+                          ),
                           "data-ocid": "real_resume.print_button",
                           children: [
                             /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { className: "w-4 h-4" }),
@@ -38027,7 +38014,7 @@ const skillCategories = [
   {
     title: "Databases & DevOps",
     emoji: "🛠️",
-    items: ["Docker", "Git/GitHub", "Postman", "AWS (EC2, S3)"]
+    items: ["Docker", "Git/GitHub", "Postman", "AWS"]
   }
 ];
 const emojiMap = {
@@ -38036,13 +38023,13 @@ const emojiMap = {
   "System Design": "🏗️"
 };
 const FALLBACK = {
-  totalSolved: 500,
-  easySolved: 140,
-  mediumSolved: 170,
-  hardSolved: 40,
-  acceptanceRate: 62.5,
-  ranking: 15e4,
-  totalQuestions: 3e3
+  totalSolved: 474,
+  easySolved: 263,
+  mediumSolved: 190,
+  hardSolved: 21,
+  acceptanceRate: 68.7,
+  ranking: 212171,
+  totalQuestions: 3930
 };
 function useCountUp(target, active, duration = 1500) {
   const [value, setValue] = reactExports.useState(0);
@@ -38141,7 +38128,7 @@ function LeetCodeSection() {
   const ref = reactExports.useRef(null);
   const inView2 = useInView(ref, { once: true, margin: "-100px" });
   reactExports.useEffect(() => {
-    fetch("https://leetcode-stats-api.herokuapp.com/Anubhav9457").then((r2) => r2.json()).then((data) => {
+    fetch("https://leetcode-api-faisalshohag.vercel.app/Anubhav9457").then((r2) => r2.json()).then((data) => {
       setStats({
         totalSolved: data.totalSolved ?? FALLBACK.totalSolved,
         easySolved: data.easySolved ?? FALLBACK.easySolved,
@@ -38280,13 +38267,13 @@ function LeetCodeSection() {
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
                         "a",
                         {
-                          href: "https://leetcode.com/u/Anubhav9457/",
+                          href: "https://codolio.com/profile/Anubhav2501",
                           target: "_blank",
                           rel: "noopener noreferrer",
                           className: "inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105",
                           style: { background: "#FFA116", color: "#1a1a1a" },
                           "data-ocid": "skills.leetcode.link",
-                          children: "View Profile ↗"
+                          children: "View Coding Profile ↗"
                         }
                       )
                     ] })

@@ -90,7 +90,12 @@ export default function RealResumeOverlay({
                       color: "white",
                       border: "none",
                     }}
-                    onClick={() => window.print()}
+                    onClick={() =>
+                    window.open(
+                      `${import.meta.env.BASE_URL}assets/Anubhav_Resume_.pdf`,
+                      "_blank"
+                    )
+                  }
                     data-ocid="real_resume.print_button"
                   >
                     <Download className="w-4 h-4" />

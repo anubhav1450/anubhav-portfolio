@@ -29,7 +29,7 @@ const skillCategories = [
   {
     title: "Databases & DevOps",
     emoji: "🛠️",
-    items: ["Docker", "Git/GitHub", "Postman", "AWS (EC2, S3)"],
+    items: ["Docker", "Git/GitHub", "Postman", "AWS"],
   },
 ];
 
@@ -50,13 +50,13 @@ interface LeetCodeStats {
 }
 
 const FALLBACK: LeetCodeStats = {
-  totalSolved: 500,
-  easySolved: 140,
-  mediumSolved: 170,
-  hardSolved: 40,
-  acceptanceRate: 62.5,
-  ranking: 150000,
-  totalQuestions: 3000,
+  totalSolved: 474,
+  easySolved: 263,
+  mediumSolved: 190,
+  hardSolved: 21,
+  acceptanceRate: 68.7,
+  ranking: 212171,
+  totalQuestions: 3930,
 };
 
 function useCountUp(target: number, active: boolean, duration = 1500) {
@@ -157,7 +157,7 @@ function LeetCodeSection() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    fetch("https://leetcode-stats-api.herokuapp.com/Anubhav9457")
+    fetch("https://leetcode-api-faisalshohag.vercel.app/Anubhav9457")
       .then((r) => r.json())
       .then((data) => {
         setStats({
@@ -282,14 +282,14 @@ function LeetCodeSection() {
                     Anubhav9457
                   </p>
                   <a
-                    href="https://leetcode.com/u/Anubhav9457/"
+                    href="https://codolio.com/profile/Anubhav2501"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
                     style={{ background: "#FFA116", color: "#1a1a1a" }}
                     data-ocid="skills.leetcode.link"
                   >
-                    View Profile ↗
+                    View Coding Profile ↗
                   </a>
                 </div>
               </div>

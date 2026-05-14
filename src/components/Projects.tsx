@@ -18,7 +18,7 @@ const projects = [
       "A real-time collaborative code editor supporting multi-user simultaneous editing, live code execution, and Docker-based deployment on AWS ECS. Features conflict-free sync using Yjs CRDT, Monaco Editor for rich code editing experience, and Socket.io for real-time communication.",
     longDescription:
       "Built a production-grade collaborative code editor where multiple developers can code together simultaneously. Uses Yjs CRDT for conflict-free real-time document sync, Monaco Editor (same as VS Code) for a rich coding experience, and Socket.io for WebSocket communication. Containerized with Docker and deployed on AWS ECS for scalability.",
-    image: "/assets/generated/project-collab-editor.dim_600x400.jpg",
+    image: `${import.meta.env.BASE_URL}assets/generated/project-collab-editor.dim_600x400.jpg`,
     tags: [
       "React",
       "Node.js",
@@ -29,7 +29,7 @@ const projects = [
       "AWS",
     ],
     liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    codeUrl: "https://github.com/anubhav1450/real-time-editor",
     featured: true,
   },
   {
@@ -38,10 +38,10 @@ const projects = [
       "A full-stack web application that scrapes Hacker News for the latest stories, with user authentication, bookmarking, and advanced search. Built with a Node.js backend using Cheerio for scraping and a React frontend.",
     longDescription:
       "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
-    image: "/assets/generated/project-hackernews.dim_600x400.jpg",
+    image: `${import.meta.env.BASE_URL}assets/generated/project-hackernews.dim_600x400.jpg`,
     tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
-    liveUrl: null,
-    codeUrl: "https://github.com/anubhav1450",
+    liveUrl: "https://hacker-news-scraper-amgo.onrender.com/",
+    codeUrl: "https://github.com/anubhav1450/Hacker-News-Scraper",
     featured: true,
   },
 ];
