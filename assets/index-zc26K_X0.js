@@ -35159,7 +35159,6 @@ function Hero({ onViewResume, onViewRealResume }) {
                   animate: { opacity: 1, y: 0 },
                   transition: { duration: 0.7, ease: "easeOut" },
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary font-semibold text-base tracking-widest uppercase mb-4", children: "Hello, World. I'm a Software Engineer." }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-[1.05] mb-4", children: [
                       "Hi, I'm ",
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary", children: "Anubhav" })
@@ -35263,10 +35262,10 @@ function Hero({ onViewResume, onViewRealResume }) {
                   initial: { opacity: 0, scale: 0.95 },
                   animate: { opacity: 1, scale: 1 },
                   transition: { duration: 0.8, ease: "easeOut", delay: 0.15 },
-                  className: "relative hidden md:block",
+                  className: "relative flex justify-center mt-10 md:mt-0",
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(HeroPhoto, {}),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-4 -left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-2 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Ready for Launch —" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base font-semibold text-primary", children: "Freelance & Full-time roles" })
                     ] })
