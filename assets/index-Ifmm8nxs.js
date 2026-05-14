@@ -30937,7 +30937,7 @@ function AboutPhoto() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/img4.png",
+            src: `${"/anubhav-portfolio/"}assets/img4.png`,
             alt: "Anubhav Kulshreshtha",
             className: "relative w-full max-w-sm rounded-2xl object-cover",
             style: {
@@ -35065,7 +35065,7 @@ function HeroPhoto() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/portfolio-img1.png",
+            src: `${"/anubhav-portfolio/"}/assets/portfolio-img1.png`,
             alt: "Anubhav Kulshreshtha",
             className: "w-full max-w-md xl:max-w-lg object-contain drop-shadow-2xl",
             style: { filter: "drop-shadow(0 0 28px oklch(0.55 0.22 280 / 0.45))" }
@@ -35352,7 +35352,7 @@ function LoadingScreen({ onDone }) {
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               "source",
               {
-                src: "/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4",
+                src: `${"/anubhav-portfolio/"}/assets/grok-019d1c28-0c90-73fa-8aa9-e1f0304da731.mp4`,
                 type: "video/mp4"
               }
             )
@@ -37043,7 +37043,7 @@ const projects = [
     title: "Real Time Collaborative Code Editor",
     description: "A real-time collaborative code editor supporting multi-user simultaneous editing, live code execution, and Docker-based deployment on AWS ECS. Features conflict-free sync using Yjs CRDT, Monaco Editor for rich code editing experience, and Socket.io for real-time communication.",
     longDescription: "Built a production-grade collaborative code editor where multiple developers can code together simultaneously. Uses Yjs CRDT for conflict-free real-time document sync, Monaco Editor (same as VS Code) for a rich coding experience, and Socket.io for WebSocket communication. Containerized with Docker and deployed on AWS ECS for scalability.",
-    image: "/assets/generated/project-collab-editor.dim_600x400.jpg",
+    image: `${"/anubhav-portfolio/"}assets/generated/project-collab-editor.dim_600x400.jpg`,
     tags: [
       "React",
       "Node.js",
@@ -37061,7 +37061,7 @@ const projects = [
     title: "Hacker News Scraper",
     description: "A full-stack web application that scrapes Hacker News for the latest stories, with user authentication, bookmarking, and advanced search. Built with a Node.js backend using Cheerio for scraping and a React frontend.",
     longDescription: "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
-    image: "/assets/generated/project-hackernews.dim_600x400.jpg",
+    image: `${"/anubhav-portfolio/"}assets/generated/project-hackernews.dim_600x400.jpg`,
     tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
     liveUrl: null,
     codeUrl: "https://github.com/anubhav1450",
