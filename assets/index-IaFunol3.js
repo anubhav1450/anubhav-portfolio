@@ -30875,7 +30875,7 @@ function PlanetBackground({ variant }) {
 const pills = [
   { icon: MapPin, label: "Bharatpur, Rajasthan, India" },
   { icon: Briefcase, label: "Fresher · Class of 2026" },
-  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.5" }
+  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.64" }
 ];
 const storyParagraphs = [
   "I'm a Computer Science fresher from Government Engineering College Bharatpur — a backend-focused software engineer who loves building things that scale. Node.js, Express, MongoDB, REST APIs, JWT auth — these are my daily tools.",
