@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    --background: 0.1 0.02 265;
+    --foreground: 0.92 0.008 240;
+    --card: 0.16 0.022 255;
+    --card-foreground: 0.92 0.008 240;
+    --popover: 0.18 0.025 255;
+    --popover-foreground: 0.92 0.008 240;
+    --primary: 0.68 0.18 230;
+    --primary-foreground: 0.08 0.01 240;
+    --secondary: 0.18 0.022 255;
+    --secondary-foreground: 0.92 0.008 240;
+    --muted: 0.17 0.02 255;
+    --muted-foreground: 0.72 0.012 240;
+    --accent: 0.6 0.18 290;
+    --accent-foreground: 0.08 0.01 240;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.24 0.024 255;
+    --input: 0.2 0.022 255;
+    --ring: 0.68 0.18 230;
+    --chart-1: 0.68 0.18 230;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.16 0.022 255;
+    --sidebar-foreground: 0.92 0.008 240;
+    --sidebar-primary: 0.68 0.18 230;
+    --sidebar-primary-foreground: 0.08 0.01 240;
+    --sidebar-accent: 0.18 0.022 255;
+    --sidebar-accent-foreground: 0.92 0.008 240;
+    --sidebar-border: 0.24 0.024 255;
+    --sidebar-ring: 0.68 0.18 230;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    font-size: 18px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: oklch(0.1 0.02 265);
+    background-image: radial-gradient(
+        ellipse 80% 60% at 20% 10%,
+        oklch(0.22 0.08 290 / 0.35) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 80% 80%,
+        oklch(0.18 0.07 220 / 0.3) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 50% 50%,
+        oklch(0.14 0.05 255 / 0.2) 0%,
+        transparent 50%
+      );
+    background-attachment: fixed;
+  }
+}
+
+@keyframes star-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 6px oklch(0.65 0.22 280 / 0.4), 0 0 12px
+      oklch(0.65 0.22 280 / 0.2);
+  }
+  50% {
+    box-shadow: 0 0 14px oklch(0.65 0.22 280 / 0.7), 0 0 28px
+      oklch(0.65 0.22 280 / 0.4), 0 0 48px oklch(0.6 0.2 200 / 0.2);
+  }
+}
+
+@keyframes tag-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px oklch(0.65 0.22 280 / 0.3);
+    border-color: oklch(0.28 0.022 255);
+  }
+  50% {
+    box-shadow: 0 0 10px oklch(0.65 0.22 280 / 0.55), 0 0 20px
+      oklch(0.6 0.18 240 / 0.2);
+    border-color: oklch(0.55 0.18 280 / 0.6);
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-muted-foreground hover:text-foreground transition-colors duration-200 text-base font-medium px-1 py-0.5;
+  }
+  .nav-link.active {
+    @apply text-primary;
+  }
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-3;
+  }
+  .section-subtitle {
+    @apply text-muted-foreground mb-10 text-lg;
+  }
+  .tech-badge {
+    @apply text-sm font-medium px-3 py-1.5 rounded-md bg-muted text-muted-foreground border border-border;
+    animation: tag-glow-pulse 3s ease-in-out infinite;
+  }
+  .tech-badge:hover {
+    box-shadow: 0 0 18px oklch(0.65 0.22 280 / 0.8), 0 0 36px
+      oklch(0.6 0.2 200 / 0.35);
+    border-color: oklch(0.65 0.22 280 / 0.8);
+  }
+  .tag-pill {
+    @apply text-sm font-medium px-3 py-1.5 rounded-full border;
+    background: oklch(0.15 0.018 255 / 0.7);
+    border-color: oklch(0.28 0.022 255);
+    color: oklch(0.72 0.012 240);
+    animation: tag-glow-pulse 3s ease-in-out infinite;
+  }
+  .tag-pill:hover {
+    box-shadow: 0 0 18px oklch(0.65 0.22 280 / 0.8), 0 0 36px
+      oklch(0.6 0.2 200 / 0.35);
+    border-color: oklch(0.65 0.22 280 / 0.8);
+  }
+
+  /* Star glow animation for all buttons */
+  [data-slot="button"]:not(:disabled) {
+    animation: star-glow-pulse 2.5s ease-in-out infinite;
+  }
+  [data-slot="button"]:not(:disabled):hover {
+    box-shadow: 0 0 20px oklch(0.65 0.22 280 / 0.85), 0 0 40px
+      oklch(0.65 0.22 280 / 0.5), 0 0 70px oklch(0.6 0.2 200 / 0.25) !important;
+  }
+}
