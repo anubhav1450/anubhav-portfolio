@@ -21977,22 +21977,11 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$f = [
+const __iconNode$e = [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
   ["path", { d: "m12 5 7 7-7 7", key: "xquz4c" }]
 ];
-const ArrowRight = createLucideIcon("arrow-right", __iconNode$f);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$e = [
-  ["path", { d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", key: "jecpp" }],
-  ["rect", { width: "20", height: "14", x: "2", y: "6", rx: "2", key: "i6l2r4" }]
-];
-const Briefcase = createLucideIcon("briefcase", __iconNode$e);
+const ArrowRight = createLucideIcon("arrow-right", __iconNode$e);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -22000,11 +21989,10 @@ const Briefcase = createLucideIcon("briefcase", __iconNode$e);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$d = [
-  ["path", { d: "m18 16 4-4-4-4", key: "1inbqp" }],
-  ["path", { d: "m6 8-4 4 4 4", key: "15zrgr" }],
-  ["path", { d: "m14.5 4-5 16", key: "e7oirm" }]
+  ["path", { d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", key: "jecpp" }],
+  ["rect", { width: "20", height: "14", x: "2", y: "6", rx: "2", key: "i6l2r4" }]
 ];
-const CodeXml = createLucideIcon("code-xml", __iconNode$d);
+const Briefcase = createLucideIcon("briefcase", __iconNode$d);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -35549,11 +35537,18 @@ function Nav() {
             {
               type: "button",
               onClick: () => handleNav("#home"),
-              className: "flex items-center gap-2 group",
+              className: "flex items-center gap-3 group",
               "data-ocid": "nav.link",
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center group-hover:bg-primary/30 transition-colors", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CodeXml, { className: "w-4 h-4 text-primary" }) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-foreground text-sm tracking-wide", children: "Anubhav Kulshreshtha" })
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex items-center justify-center w-10 h-10", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 rounded-full border border-cyan-400/30 animate-spin [animation-duration:10s]" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 blur-[2px] opacity-80 group-hover:scale-110 transition-transform duration-300" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute w-3 h-3 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-start leading-none", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-semibold tracking-[0.25em] text-white uppercase", children: "ANUBHAV" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-cyan-300/70 tracking-[0.3em] uppercase", children: "Build • Scale • Evolve" })
+                ] })
               ]
             }
           ),
