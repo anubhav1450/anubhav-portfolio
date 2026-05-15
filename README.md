@@ -43,6 +43,3 @@ Built with patience, creativity, and countless iterations.
 
 ---
 
-## 📄 License
-
-MIT
