@@ -53,7 +53,7 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button
+                  {/* <Button
                     variant="outline"
                     size="sm"
                     className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
@@ -62,7 +62,7 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                   >
                     <Printer className="w-4 h-4" />
                     Print (for posterity)
-                  </Button>
+                  </Button> */}
                   <Button
                     variant="ghost"
                     size="icon"
