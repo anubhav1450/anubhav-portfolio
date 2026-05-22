@@ -92,7 +92,7 @@ export default function RealResumeOverlay({
                     }}
                     onClick={() =>
                     window.open(
-                      `${import.meta.env.BASE_URL}assets/Anubhav_Resume_.pdf`,
+                      `${import.meta.env.BASE_URL}assets/Anubhav_ResumeTP.pdf`,
                       "_blank"
                     )
                   }
