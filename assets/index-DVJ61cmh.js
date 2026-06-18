@@ -37372,7 +37372,7 @@ function RealResumeOverlay({
                             border: "none"
                           },
                           onClick: () => window.open(
-                            `${"/anubhav-portfolio/"}assets/Anubhav_ResumeTP.pdf`,
+                            `${"/anubhav-portfolio/"}assets/Anubhav_Kulshreshtha_Resume.pdf`,
                             "_blank"
                           ),
                           "data-ocid": "real_resume.print_button",
