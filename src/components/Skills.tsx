@@ -1,3 +1,8 @@
+import {
+  LEETCODE_PROFILE_URL,
+  LEETCODE_USERNAME,
+  useLeetCodeStats,
+} from "@/hooks/useLeetCodeStats";
 import { motion, useInView } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PlanetBackground from "./PlanetBackground";
@@ -5,9 +10,20 @@ import { techIconMap } from "./techIconMap";
 
 const skillCategories = [
   {
-    title: "Programming Languages",
+    title: "Languages",
     emoji: "⌨️",
-    items: ["Java", "JavaScript", "Python", "SQL"],
+    items: ["Python", "JavaScript", "Java", "SQL"],
+  },
+  {
+    title: "Software Engineering",
+    emoji: "🏗️",
+    items: [
+      "Data Structures & Algorithms",
+      "OOP",
+      "SDLC",
+      "Unit & API Testing",
+      "Debugging",
+    ],
   },
   {
     title: "Backend",
@@ -15,21 +31,37 @@ const skillCategories = [
     items: [
       "Node.js",
       "Express.js",
-      "MongoDB",
-      "MySQL",
+      "FastAPI",
       "REST APIs",
-      "JWT/RBAC",
+      "WebSockets",
+      "JWT Authentication",
+      "RBAC",
+    ],
+  },
+  {
+    title: "Databases",
+    emoji: "🗄️",
+    items: ["MongoDB", "MySQL", "SQLite"],
+  },
+  {
+    title: "Cloud & Tools",
+    emoji: "🛠️",
+    items: [
+      "AWS ECS",
+      "Docker",
+      "Vercel",
+      "Render",
+      "Git",
+      "Linux",
+      "Postman",
+      "Playwright",
+      "LLM API integration",
     ],
   },
   {
     title: "Frontend",
     emoji: "🖥️",
-    items: ["HTML", "CSS", "Tailwind CSS", "Bootstrap", "React.js", "Vite"],
-  },
-  {
-    title: "Databases & DevOps",
-    emoji: "🛠️",
-    items: ["Docker", "Git/GitHub", "Postman", "AWS"],
+    items: ["React.js", "HTML5", "CSS3", "TailwindCSS"],
   },
 ];
 
@@ -37,26 +69,17 @@ const emojiMap: Record<string, string> = {
   Algorithms: "📐",
   "Data Structures": "🌳",
   "System Design": "🏗️",
-};
-
-interface LeetCodeStats {
-  totalSolved: number;
-  easySolved: number;
-  mediumSolved: number;
-  hardSolved: number;
-  acceptanceRate: number;
-  ranking: number;
-  totalQuestions: number;
-}
-
-const FALLBACK: LeetCodeStats = {
-  totalSolved: 474,
-  easySolved: 263,
-  mediumSolved: 190,
-  hardSolved: 21,
-  acceptanceRate: 68.7,
-  ranking: 212171,
-  totalQuestions: 3930,
+  "Data Structures & Algorithms": "🌳",
+  OOP: "🧩",
+  SDLC: "🔄",
+  "Unit & API Testing": "🧪",
+  Debugging: "🐞",
+  "REST APIs": "🔌",
+  WebSockets: "⚡",
+  "JWT Authentication": "🔐",
+  RBAC: "🛡️",
+  Render: "☁️",
+  "LLM API integration": "🤖",
 };
 
 function useCountUp(target: number, active: boolean, duration = 1500) {
@@ -151,37 +174,23 @@ function TechBadge({ name }: { name: string }) {
 }
 
 function LeetCodeSection() {
-  const [stats, setStats] = useState<LeetCodeStats | null>(null);
-  const [loading, setLoading] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    fetch("https://leetcode-api-faisalshohag.vercel.app/Anubhav9457")
-      .then((r) => r.json())
-      .then((data) => {
-        setStats({
-          totalSolved: data.totalSolved ?? FALLBACK.totalSolved,
-          easySolved: data.easySolved ?? FALLBACK.easySolved,
-          mediumSolved: data.mediumSolved ?? FALLBACK.mediumSolved,
-          hardSolved: data.hardSolved ?? FALLBACK.hardSolved,
-          acceptanceRate: data.acceptanceRate ?? FALLBACK.acceptanceRate,
-          ranking: data.ranking ?? FALLBACK.ranking,
-          totalQuestions: data.totalQuestions ?? FALLBACK.totalQuestions,
-        });
-      })
-      .catch(() => setStats(FALLBACK))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const active = inView && !loading;
-  const s = stats ?? FALLBACK;
+  const { stats: s, source, updatedAt, loading } = useLeetCodeStats();
+  const active = inView;
 
   const totalCount = useCountUp(s.totalSolved, active);
   const easyCount = useCountUp(s.easySolved, active);
   const mediumCount = useCountUp(s.mediumSolved, active);
   const hardCount = useCountUp(s.hardSolved, active);
   const rankCount = useCountUp(s.ranking, active, 2000);
+  const ratingCount = useCountUp(s.contestRating ?? 0, active);
+  const updatedLabel = updatedAt
+    ? new Date(updatedAt).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
 
   return (
     <motion.div
@@ -220,41 +229,7 @@ function LeetCodeSection() {
           }}
         />
 
-        {loading ? (
-          <div
-            className="flex flex-col gap-4"
-            data-ocid="skills.leetcode.loading_state"
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className="w-16 h-16 rounded-xl animate-pulse"
-                style={{ background: "oklch(0.22 0.03 40 / 0.6)" }}
-              />
-              <div className="space-y-2">
-                <div
-                  className="w-36 h-5 rounded animate-pulse"
-                  style={{ background: "oklch(0.22 0.03 40 / 0.6)" }}
-                />
-                <div
-                  className="w-24 h-3 rounded animate-pulse"
-                  style={{ background: "oklch(0.22 0.03 40 / 0.4)" }}
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="h-24 rounded-xl animate-pulse"
-                  style={{
-                    background: "oklch(0.22 0.03 40 / 0.4)",
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
+        {
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8">
               <div className="flex items-center gap-4 flex-1">
@@ -279,14 +254,51 @@ function LeetCodeSection() {
                     LeetCode
                   </p>
                   <p className="text-2xl font-black text-foreground">
-                    Anubhav9457
+                    {LEETCODE_USERNAME}
                   </p>
+                  <p
+                    className="mt-1 text-xs font-semibold flex items-center gap-1.5"
+                    style={{
+                      color:
+                        source === "live" ? "#2db55d" : "oklch(0.7 0.05 255)",
+                    }}
+                    data-ocid="skills.leetcode.status"
+                  >
+                    <span
+                      className={`inline-block w-2 h-2 rounded-full ${source === "live" ? "animate-pulse" : ""}`}
+                      style={{
+                        background:
+                          source === "live" ? "#2db55d" : "oklch(0.6 0.05 255)",
+                      }}
+                    />
+                    {source === "live"
+                      ? `Live · updated ${updatedLabel}`
+                      : loading
+                        ? "Connecting to LeetCode…"
+                        : source === "cached"
+                          ? `Cached · last synced ${updatedLabel}`
+                          : "Offline snapshot"}
+                  </p>
+                  <a
+                    href={LEETCODE_PROFILE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-2 mr-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
+                    style={{ background: "#FFA116", color: "#1a1a1a" }}
+                    data-ocid="skills.leetcode.profile_link"
+                  >
+                    View on LeetCode ↗
+                  </a>
                   <a
                     href="https://codolio.com/profile/Anubhav2501"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
-                    style={{ background: "#FFA116", color: "#1a1a1a" }}
+                    style={{
+                      background: "transparent",
+                      color: "#FFA116",
+                      border: "1px solid #FFA116",
+                    }}
                     data-ocid="skills.leetcode.link"
                   >
                     View Coding Profile ↗
@@ -407,9 +419,41 @@ function LeetCodeSection() {
                   </p>
                 </div>
               </div>
+              {s.contestRating !== null && (
+                <div
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl flex-1 min-w-[160px]"
+                  style={{
+                    background: "oklch(0.18 0.05 60 / 0.5)",
+                    border: "1px solid oklch(0.45 0.1 60 / 0.35)",
+                  }}
+                >
+                  <span className="text-2xl">⚡</span>
+                  <div>
+                    <p className="text-sm text-muted-foreground font-medium">
+                      Contest Rating
+                    </p>
+                    <p
+                      className="text-xl font-black"
+                      style={{ color: "#FFA116" }}
+                    >
+                      {ratingCount}
+                      {s.contestTopPercentage !== null && (
+                        <span className="ml-2 text-sm font-semibold text-muted-foreground">
+                          Top {s.contestTopPercentage}%
+                        </span>
+                      )}
+                    </p>
+                    {s.contestsAttended !== null && (
+                      <p className="text-xs text-muted-foreground">
+                        {s.contestsAttended} contests
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        }
       </div>
     </motion.div>
   );

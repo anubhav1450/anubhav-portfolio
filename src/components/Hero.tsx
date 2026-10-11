@@ -5,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLeetCodeStats } from "@/hooks/useLeetCodeStats";
 import { ArrowRight, FileText, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import PlanetBackground from "./PlanetBackground";
@@ -102,6 +103,7 @@ function DevBackgroundSnippets() {
 }
 
 export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
+  const { stats: lc } = useLeetCodeStats();
   const scrollToProjects = () => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -132,13 +134,13 @@ export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
               Hi, I&apos;m <span className="text-primary">Anubhav</span>
             </h1>
             <p className="text-primary text-2xl font-semibold mb-5">
-              Full Stack Software Engineer
+              Backend-Focused Software Engineer
             </p>
             <p className="text-muted-foreground text-xl leading-relaxed mb-8 max-w-md">
-              I build scalable backend systems, craft clean APIs, and ship
-              production-ready code. I solve 500+ problems across LeetCode,
-              CodeChef &amp; GFG for fun and debug other people&apos;s code for
-              sport. Space is just my aesthetic.
+              I build REST APIs, authentication and database-backed workflows in
+              Node.js, and systems that stay correct under pressure: a real-time
+              editor on Yjs CRDTs and an LLM guarded by signed tokens. Top 7.63%
+              on LeetCode. Space is just my aesthetic.
             </p>
 
             {/* Button group */}
@@ -222,9 +224,15 @@ export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
             {/* Stats */}
             <div className="flex gap-8 mt-10">
               {[
-                { value: "1+", label: "Years Shipping Code" },
-                { value: "10+", label: "Projects Built" },
-                { value: "500+ 🚀", label: "Problems Across Platforms" },
+                {
+                  value: String(lc.totalSolved),
+                  label: "LeetCode Problems Solved",
+                },
+                {
+                  value: String(lc.contestRating ?? "—"),
+                  label: "LeetCode Contest Rating",
+                },
+                { value: "86", label: "Automated Tests · Agent Trust Lab" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="text-3xl font-bold text-primary">
@@ -251,7 +259,7 @@ export default function Hero({ onViewResume, onViewRealResume }: HeroProps) {
                 Ready for Launch —
               </p>
               <p className="text-base font-semibold text-primary">
-                Freelance &amp; Full-time roles
+                Open to full-time roles
               </p>
             </div>
           </motion.div>
