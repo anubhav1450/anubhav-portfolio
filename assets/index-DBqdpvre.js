@@ -650,11 +650,11 @@ class HashMD extends Hash {
     if (len % 4)
       throw new Error("_sha2: outputLen should be aligned to 32bit");
     const outLen = len / 4;
-    const state = this.get();
-    if (outLen > state.length)
+    const state2 = this.get();
+    if (outLen > state2.length)
       throw new Error("_sha2: outputLen bigger than state");
     for (let i = 0; i < outLen; i++)
-      oview.setUint32(4 * i, state[i], isLE);
+      oview.setUint32(4 * i, state2[i], isLE);
   }
   digest() {
     const { buffer, outputLen } = this;
@@ -1402,9 +1402,9 @@ class PipeArrayBuffer {
    * Read `num` number of bytes from the front of the pipe.
    * @param num The number of bytes to read.
    */
-  read(num) {
-    const result = this._view.subarray(0, num);
-    this._view = this._view.subarray(num);
+  read(num2) {
+    const result = this._view.subarray(0, num2);
+    this._view = this._view.subarray(num2);
     return result.slice();
   }
   readUint8() {
@@ -1861,7 +1861,7 @@ function FpSqrt(P) {
     return sqrt9mod16(P);
   return tonelliShanks(P);
 }
-const isNegativeLE = (num, modulo) => (mod(num, modulo) & _1n$3) === _1n$3;
+const isNegativeLE = (num2, modulo) => (mod(num2, modulo) & _1n$3) === _1n$3;
 const FIELD_FIELDS = [
   "create",
   "isValid",
@@ -1895,15 +1895,15 @@ function validateField(field) {
   _validateObject(field, opts);
   return field;
 }
-function FpPow(Fp2, num, power) {
+function FpPow(Fp2, num2, power) {
   if (power < _0n$2)
     throw new Error("invalid exponent, negatives unsupported");
   if (power === _0n$2)
     return Fp2.ONE;
   if (power === _1n$3)
-    return num;
+    return num2;
   let p = Fp2.ONE;
-  let d = num;
+  let d = num2;
   while (power > _0n$2) {
     if (power & _1n$3)
       p = Fp2.mul(p, d);
@@ -1914,18 +1914,18 @@ function FpPow(Fp2, num, power) {
 }
 function FpInvertBatch(Fp2, nums, passZero = false) {
   const inverted = new Array(nums.length).fill(passZero ? Fp2.ZERO : void 0);
-  const multipliedAcc = nums.reduce((acc, num, i) => {
-    if (Fp2.is0(num))
+  const multipliedAcc = nums.reduce((acc, num2, i) => {
+    if (Fp2.is0(num2))
       return acc;
     inverted[i] = acc;
-    return Fp2.mul(acc, num);
+    return Fp2.mul(acc, num2);
   }, Fp2.ONE);
   const invertedAcc = Fp2.inv(multipliedAcc);
-  nums.reduceRight((acc, num, i) => {
-    if (Fp2.is0(num))
+  nums.reduceRight((acc, num2, i) => {
+    if (Fp2.is0(num2))
       return acc;
     inverted[i] = Fp2.mul(acc, inverted[i]);
-    return Fp2.mul(acc, num);
+    return Fp2.mul(acc, num2);
   }, invertedAcc);
   return inverted;
 }
@@ -1985,36 +1985,36 @@ function Field(ORDER, bitLenOrOpts, isLE = false, opts = {}) {
     ZERO: _0n$2,
     ONE: _1n$3,
     allowedLengths,
-    create: (num) => mod(num, ORDER),
-    isValid: (num) => {
-      if (typeof num !== "bigint")
-        throw new Error("invalid field element: expected bigint, got " + typeof num);
-      return _0n$2 <= num && num < ORDER;
+    create: (num2) => mod(num2, ORDER),
+    isValid: (num2) => {
+      if (typeof num2 !== "bigint")
+        throw new Error("invalid field element: expected bigint, got " + typeof num2);
+      return _0n$2 <= num2 && num2 < ORDER;
     },
-    is0: (num) => num === _0n$2,
+    is0: (num2) => num2 === _0n$2,
     // is valid and invertible
-    isValidNot0: (num) => !f.is0(num) && f.isValid(num),
-    isOdd: (num) => (num & _1n$3) === _1n$3,
-    neg: (num) => mod(-num, ORDER),
+    isValidNot0: (num2) => !f.is0(num2) && f.isValid(num2),
+    isOdd: (num2) => (num2 & _1n$3) === _1n$3,
+    neg: (num2) => mod(-num2, ORDER),
     eql: (lhs, rhs) => lhs === rhs,
-    sqr: (num) => mod(num * num, ORDER),
+    sqr: (num2) => mod(num2 * num2, ORDER),
     add: (lhs, rhs) => mod(lhs + rhs, ORDER),
     sub: (lhs, rhs) => mod(lhs - rhs, ORDER),
     mul: (lhs, rhs) => mod(lhs * rhs, ORDER),
-    pow: (num, power) => FpPow(f, num, power),
+    pow: (num2, power) => FpPow(f, num2, power),
     div: (lhs, rhs) => mod(lhs * invert(rhs, ORDER), ORDER),
     // Same as above, but doesn't normalize
-    sqrN: (num) => num * num,
+    sqrN: (num2) => num2 * num2,
     addN: (lhs, rhs) => lhs + rhs,
     subN: (lhs, rhs) => lhs - rhs,
     mulN: (lhs, rhs) => lhs * rhs,
-    inv: (num) => invert(num, ORDER),
+    inv: (num2) => invert(num2, ORDER),
     sqrt: _sqrt || ((n) => {
       if (!sqrtP)
         sqrtP = FpSqrt(ORDER);
       return sqrtP(f, n);
     }),
-    toBytes: (num) => isLE ? numberToBytesLE(num, BYTES) : numberToBytesBE(num, BYTES),
+    toBytes: (num2) => isLE ? numberToBytesLE(num2, BYTES) : numberToBytesBE(num2, BYTES),
     fromBytes: (bytes, skipValidation = true) => {
       if (allowedLengths) {
         if (!allowedLengths.includes(bytes.length) || bytes.length > BYTES) {
@@ -3884,8 +3884,8 @@ var Query = (_e = class extends Removable {
     });
     return data;
   }
-  setState(state) {
-    __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "setState", state });
+  setState(state2) {
+    __privateMethod(this, _Query_instances, dispatch_fn).call(this, { type: "setState", state: state2 });
   }
   cancel(options) {
     var _a2, _b2;
@@ -4139,35 +4139,35 @@ var Query = (_e = class extends Removable {
 }, _queryType = new WeakMap(), _initialState = new WeakMap(), _revertState = new WeakMap(), _cache = new WeakMap(), _client = new WeakMap(), _retryer = new WeakMap(), _defaultOptions = new WeakMap(), _abortSignalConsumed = new WeakMap(), _Query_instances = new WeakSet(), isInitialPausedFetch_fn = function() {
   return this.state.fetchStatus === "paused" && this.state.status === "pending";
 }, dispatch_fn = function(action) {
-  const reducer = (state) => {
+  const reducer = (state2) => {
     switch (action.type) {
       case "failed":
         return {
-          ...state,
+          ...state2,
           fetchFailureCount: action.failureCount,
           fetchFailureReason: action.error
         };
       case "pause":
         return {
-          ...state,
+          ...state2,
           fetchStatus: "paused"
         };
       case "continue":
         return {
-          ...state,
+          ...state2,
           fetchStatus: "fetching"
         };
       case "fetch":
         return {
-          ...state,
-          ...fetchState(state.data, this.options),
+          ...state2,
+          ...fetchState(state2.data, this.options),
           fetchMeta: action.meta ?? null
         };
       case "success":
         const newState = {
-          ...state,
+          ...state2,
           ...successState(action.data, action.dataUpdatedAt),
-          dataUpdateCount: state.dataUpdateCount + 1,
+          dataUpdateCount: state2.dataUpdateCount + 1,
           ...!action.manual && {
             fetchStatus: "idle",
             fetchFailureCount: 0,
@@ -4179,11 +4179,11 @@ var Query = (_e = class extends Removable {
       case "error":
         const error = action.error;
         return {
-          ...state,
+          ...state2,
           error,
-          errorUpdateCount: state.errorUpdateCount + 1,
+          errorUpdateCount: state2.errorUpdateCount + 1,
           errorUpdatedAt: Date.now(),
-          fetchFailureCount: state.fetchFailureCount + 1,
+          fetchFailureCount: state2.fetchFailureCount + 1,
           fetchFailureReason: error,
           fetchStatus: "idle",
           status: "error",
@@ -4193,12 +4193,12 @@ var Query = (_e = class extends Removable {
         };
       case "invalidate":
         return {
-          ...state,
+          ...state2,
           isInvalidated: true
         };
       case "setState":
         return {
-          ...state,
+          ...state2,
           ...action.state
         };
     }
@@ -4455,27 +4455,27 @@ var Mutation = (_f = class extends Removable {
     }
   }
 }, _client2 = new WeakMap(), _observers = new WeakMap(), _mutationCache = new WeakMap(), _retryer2 = new WeakMap(), _Mutation_instances = new WeakSet(), dispatch_fn2 = function(action) {
-  const reducer = (state) => {
+  const reducer = (state2) => {
     switch (action.type) {
       case "failed":
         return {
-          ...state,
+          ...state2,
           failureCount: action.failureCount,
           failureReason: action.error
         };
       case "pause":
         return {
-          ...state,
+          ...state2,
           isPaused: true
         };
       case "continue":
         return {
-          ...state,
+          ...state2,
           isPaused: false
         };
       case "pending":
         return {
-          ...state,
+          ...state2,
           context: action.context,
           data: void 0,
           failureCount: 0,
@@ -4488,7 +4488,7 @@ var Mutation = (_f = class extends Removable {
         };
       case "success":
         return {
-          ...state,
+          ...state2,
           data: action.data,
           failureCount: 0,
           failureReason: null,
@@ -4498,10 +4498,10 @@ var Mutation = (_f = class extends Removable {
         };
       case "error":
         return {
-          ...state,
+          ...state2,
           data: void 0,
           error: action.error,
-          failureCount: state.failureCount + 1,
+          failureCount: state2.failureCount + 1,
           failureReason: action.error,
           isPaused: false,
           status: "error"
@@ -4544,13 +4544,13 @@ var MutationCache = (_g = class extends Subscribable {
     __privateSet(this, _scopes, /* @__PURE__ */ new Map());
     __privateSet(this, _mutationId, 0);
   }
-  build(client2, options, state) {
+  build(client2, options, state2) {
     const mutation = new Mutation({
       client: client2,
       mutationCache: this,
       mutationId: ++__privateWrapper(this, _mutationId)._,
       options: client2.defaultMutationOptions(options),
-      state
+      state: state2
     });
     this.add(mutation);
     return mutation;
@@ -4657,7 +4657,7 @@ var QueryCache = (_h = class extends Subscribable {
     this.config = config;
     __privateSet(this, _queries, /* @__PURE__ */ new Map());
   }
-  build(client2, options, state) {
+  build(client2, options, state2) {
     const queryKey = options.queryKey;
     const queryHash = options.queryHash ?? hashQueryKeyByOptions(queryKey, options);
     let query = this.get(queryHash);
@@ -4667,7 +4667,7 @@ var QueryCache = (_h = class extends Subscribable {
         queryKey,
         queryHash,
         options: client2.defaultQueryOptions(options),
-        state,
+        state: state2,
         defaultOptions: client2.getQueryDefaults(queryKey)
       });
       this.add(query);
@@ -4811,8 +4811,8 @@ var QueryClient = (_i = class {
     return Promise.resolve(cachedData);
   }
   getQueriesData(filters) {
-    return __privateGet(this, _queryCache).findAll(filters).map(({ queryKey, state }) => {
-      const data = state.data;
+    return __privateGet(this, _queryCache).findAll(filters).map(({ queryKey, state: state2 }) => {
+      const data = state2.data;
       return [queryKey, data];
     });
   }
@@ -5450,9 +5450,9 @@ react_production.useRef = function(initialValue) {
 react_production.useState = function(initialState) {
   return ReactSharedInternals$2.H.useState(initialState);
 };
-react_production.useSyncExternalStore = function(subscribe, getSnapshot, getServerSnapshot) {
+react_production.useSyncExternalStore = function(subscribe2, getSnapshot, getServerSnapshot) {
   return ReactSharedInternals$2.H.useSyncExternalStore(
-    subscribe,
+    subscribe2,
     getSnapshot,
     getServerSnapshot
   );
@@ -6988,12 +6988,12 @@ var scheduler_production = {};
   }
   var taskQueue = [], timerQueue = [], taskIdCounter = 1, currentTask = null, currentPriorityLevel = 3, isPerformingWork = false, isHostCallbackScheduled = false, isHostTimeoutScheduled = false, needsPaint = false, localSetTimeout = "function" === typeof setTimeout ? setTimeout : null, localClearTimeout = "function" === typeof clearTimeout ? clearTimeout : null, localSetImmediate = "undefined" !== typeof setImmediate ? setImmediate : null;
   function advanceTimers(currentTime) {
-    for (var timer = peek(timerQueue); null !== timer; ) {
-      if (null === timer.callback) pop2(timerQueue);
-      else if (timer.startTime <= currentTime)
-        pop2(timerQueue), timer.sortIndex = timer.expirationTime, push2(taskQueue, timer);
+    for (var timer2 = peek(timerQueue); null !== timer2; ) {
+      if (null === timer2.callback) pop2(timerQueue);
+      else if (timer2.startTime <= currentTime)
+        pop2(timerQueue), timer2.sortIndex = timer2.expirationTime, push2(taskQueue, timer2);
       else break;
-      timer = peek(timerQueue);
+      timer2 = peek(timerQueue);
     }
   }
   function handleTimeout(currentTime) {
@@ -9491,15 +9491,15 @@ function readContextForConsumer(consumer, context) {
   return value;
 }
 var AbortControllerLocal = "undefined" !== typeof AbortController ? AbortController : function() {
-  var listeners = [], signal = this.signal = {
+  var listeners2 = [], signal = this.signal = {
     aborted: false,
     addEventListener: function(type, listener) {
-      listeners.push(listener);
+      listeners2.push(listener);
     }
   };
   this.abort = function() {
     signal.aborted = true;
-    listeners.forEach(function(listener) {
+    listeners2.forEach(function(listener) {
       return listener();
     });
   };
@@ -9545,33 +9545,33 @@ function entangleAsyncAction(transition, thenable) {
 function pingEngtangledActionScope() {
   if (0 === --currentEntangledPendingCount && null !== currentEntangledListeners) {
     null !== currentEntangledActionThenable && (currentEntangledActionThenable.status = "fulfilled");
-    var listeners = currentEntangledListeners;
+    var listeners2 = currentEntangledListeners;
     currentEntangledListeners = null;
     currentEntangledLane = 0;
     currentEntangledActionThenable = null;
-    for (var i = 0; i < listeners.length; i++) (0, listeners[i])();
+    for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])();
   }
 }
 function chainThenableValue(thenable, result) {
-  var listeners = [], thenableWithOverride = {
+  var listeners2 = [], thenableWithOverride = {
     status: "pending",
     value: null,
     reason: null,
     then: function(resolve) {
-      listeners.push(resolve);
+      listeners2.push(resolve);
     }
   };
   thenable.then(
     function() {
       thenableWithOverride.status = "fulfilled";
       thenableWithOverride.value = result;
-      for (var i = 0; i < listeners.length; i++) (0, listeners[i])(result);
+      for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])(result);
     },
     function(error) {
       thenableWithOverride.status = "rejected";
       thenableWithOverride.reason = error;
-      for (error = 0; error < listeners.length; error++)
-        (0, listeners[error])(void 0);
+      for (error = 0; error < listeners2.length; error++)
+        (0, listeners2[error])(void 0);
     }
   );
   return thenableWithOverride;
@@ -10024,8 +10024,8 @@ function useMemoCache(size2) {
   memoCache.index++;
   return updateQueue;
 }
-function basicStateReducer(state, action) {
-  return "function" === typeof action ? action(state) : action;
+function basicStateReducer(state2, action) {
+  return "function" === typeof action ? action(state2) : action;
 }
 function updateReducer(reducer) {
   var hook = updateWorkInProgressHook();
@@ -10119,7 +10119,7 @@ function rerenderReducer(reducer) {
   }
   return [newState, dispatch];
 }
-function updateSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
+function updateSyncExternalStore(subscribe2, getSnapshot, getServerSnapshot) {
   var fiber = currentlyRenderingFiber, hook = updateWorkInProgressHook(), isHydrating$jscomp$0 = isHydrating;
   if (isHydrating$jscomp$0) {
     if (void 0 === getServerSnapshot) throw Error(formatProdErrorMessage(407));
@@ -10131,8 +10131,8 @@ function updateSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
   );
   snapshotChanged && (hook.memoizedState = getServerSnapshot, didReceiveUpdate = true);
   hook = hook.queue;
-  var create = subscribeToStore.bind(null, fiber, hook, subscribe);
-  updateEffectImpl(2048, 8, create, [subscribe]);
+  var create = subscribeToStore.bind(null, fiber, hook, subscribe2);
+  updateEffectImpl(2048, 8, create, [subscribe2]);
   if (hook.getSnapshot !== getSnapshot || snapshotChanged || null !== workInProgressHook && workInProgressHook.memoizedState.tag & 1) {
     fiber.flags |= 2048;
     pushSimpleEffect(
@@ -10163,8 +10163,8 @@ function updateStoreInstance(fiber, inst, nextSnapshot, getSnapshot) {
   inst.getSnapshot = getSnapshot;
   checkIfSnapshotChanged(inst) && forceStoreRerender(fiber);
 }
-function subscribeToStore(fiber, inst, subscribe) {
-  return subscribe(function() {
+function subscribeToStore(fiber, inst, subscribe2) {
+  return subscribe2(function() {
     checkIfSnapshotChanged(inst) && forceStoreRerender(fiber);
   });
 }
@@ -10214,7 +10214,7 @@ function updateOptimisticImpl(hook, current, passthrough, reducer) {
     "function" === typeof reducer ? reducer : basicStateReducer
   );
 }
-function dispatchActionState(fiber, actionQueue, setPendingState, setState, payload) {
+function dispatchActionState(fiber, actionQueue, setPendingState, setState2, payload) {
   if (isRenderPhaseUpdate(fiber)) throw Error(formatProdErrorMessage(485));
   fiber = actionQueue.action;
   if (null !== fiber) {
@@ -10232,7 +10232,7 @@ function dispatchActionState(fiber, actionQueue, setPendingState, setState, payl
       }
     };
     null !== ReactSharedInternals.T ? setPendingState(true) : actionNode.isTransition = false;
-    setState(actionNode);
+    setState2(actionNode);
     setPendingState = actionQueue.pending;
     null === setPendingState ? (actionNode.next = actionQueue.pending = actionNode, runActionStateAction(actionQueue, actionNode)) : (actionNode.next = setPendingState.next, actionQueue.pending = setPendingState.next = actionNode);
   }
@@ -10390,12 +10390,12 @@ function updateActionStateImpl(stateHook, currentStateHook, action) {
   stateHook = updateReducer(basicStateReducer)[0];
   if ("object" === typeof currentStateHook && null !== currentStateHook && "function" === typeof currentStateHook.then)
     try {
-      var state = useThenable(currentStateHook);
+      var state2 = useThenable(currentStateHook);
     } catch (x2) {
       if (x2 === SuspenseException) throw SuspenseActionException;
       throw x2;
     }
-  else state = currentStateHook;
+  else state2 = currentStateHook;
   currentStateHook = updateWorkInProgressHook();
   var actionQueue = currentStateHook.queue, dispatch = actionQueue.dispatch;
   action !== currentStateHook.memoizedState && (currentlyRenderingFiber.flags |= 2048, pushSimpleEffect(
@@ -10404,7 +10404,7 @@ function updateActionStateImpl(stateHook, currentStateHook, action) {
     actionStateActionEffect.bind(null, actionQueue, action),
     null
   ));
-  return [state, dispatch, stateHook];
+  return [state2, dispatch, stateHook];
 }
 function actionStateActionEffect(actionQueue, action) {
   actionQueue.action = action;
@@ -10858,7 +10858,7 @@ var ContextOnlyDispatcher = {
     mountWorkInProgressHook().memoizedState = stateHook;
     return [false, stateHook];
   },
-  useSyncExternalStore: function(subscribe, getSnapshot, getServerSnapshot) {
+  useSyncExternalStore: function(subscribe2, getSnapshot, getServerSnapshot) {
     var fiber = currentlyRenderingFiber, hook = mountWorkInProgressHook();
     if (isHydrating) {
       if (void 0 === getServerSnapshot)
@@ -10873,8 +10873,8 @@ var ContextOnlyDispatcher = {
     hook.memoizedState = getServerSnapshot;
     var inst = { value: getServerSnapshot, getSnapshot };
     hook.queue = inst;
-    mountEffect(subscribeToStore.bind(null, fiber, inst, subscribe), [
-      subscribe
+    mountEffect(subscribeToStore.bind(null, fiber, inst, subscribe2), [
+      subscribe2
     ]);
     fiber.flags |= 2048;
     pushSimpleEffect(
@@ -11519,8 +11519,8 @@ var suspenseStackCursor = createCursor(0);
 function findFirstSuspended(row) {
   for (var node = row; null !== node; ) {
     if (13 === node.tag) {
-      var state = node.memoizedState;
-      if (null !== state && (state = state.dehydrated, null === state || "$?" === state.data || isSuspenseInstanceFallback(state)))
+      var state2 = node.memoizedState;
+      if (null !== state2 && (state2 = state2.dehydrated, null === state2 || "$?" === state2.data || isSuspenseInstanceFallback(state2)))
         return node;
     } else if (19 === node.tag && void 0 !== node.memoizedProps.revealOrder) {
       if (0 !== (node.flags & 128)) return node;
@@ -12399,9 +12399,9 @@ function attemptEarlyBailoutIfNoScheduledUpdate(current, workInProgress2, render
       );
       break;
     case 13:
-      var state = workInProgress2.memoizedState;
-      if (null !== state) {
-        if (null !== state.dehydrated)
+      var state2 = workInProgress2.memoizedState;
+      if (null !== state2) {
+        if (null !== state2.dehydrated)
           return pushPrimaryTreeSuspenseHandler(workInProgress2), workInProgress2.flags |= 128, null;
         if (0 !== (renderLanes2 & workInProgress2.child.childLanes))
           return updateSuspenseComponent(current, workInProgress2, renderLanes2);
@@ -12417,15 +12417,15 @@ function attemptEarlyBailoutIfNoScheduledUpdate(current, workInProgress2, render
       break;
     case 19:
       var didSuspendBefore = 0 !== (current.flags & 128);
-      state = 0 !== (renderLanes2 & workInProgress2.childLanes);
-      state || (propagateParentContextChanges(
+      state2 = 0 !== (renderLanes2 & workInProgress2.childLanes);
+      state2 || (propagateParentContextChanges(
         current,
         workInProgress2,
         renderLanes2,
         false
-      ), state = 0 !== (renderLanes2 & workInProgress2.childLanes));
+      ), state2 = 0 !== (renderLanes2 & workInProgress2.childLanes));
       if (didSuspendBefore) {
-        if (state)
+        if (state2)
           return updateSuspenseListComponent(
             current,
             workInProgress2,
@@ -12436,7 +12436,7 @@ function attemptEarlyBailoutIfNoScheduledUpdate(current, workInProgress2, render
       didSuspendBefore = workInProgress2.memoizedState;
       null !== didSuspendBefore && (didSuspendBefore.rendering = null, didSuspendBefore.tail = null, didSuspendBefore.lastEffect = null);
       push(suspenseStackCursor, suspenseStackCursor.current);
-      if (state) break;
+      if (state2) break;
       else return null;
     case 22:
     case 23:
@@ -16234,15 +16234,15 @@ function createDispatchListener(instance, listener, currentTarget) {
   };
 }
 function accumulateTwoPhaseListeners(targetFiber, reactName) {
-  for (var captureName = reactName + "Capture", listeners = []; null !== targetFiber; ) {
+  for (var captureName = reactName + "Capture", listeners2 = []; null !== targetFiber; ) {
     var _instance2 = targetFiber, stateNode = _instance2.stateNode;
     _instance2 = _instance2.tag;
-    5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners.unshift(
+    5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners2.unshift(
       createDispatchListener(targetFiber, _instance2, stateNode)
-    ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners.push(
+    ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners2.push(
       createDispatchListener(targetFiber, _instance2, stateNode)
     ));
-    if (3 === targetFiber.tag) return listeners;
+    if (3 === targetFiber.tag) return listeners2;
     targetFiber = targetFiber.return;
   }
   return [];
@@ -16255,18 +16255,18 @@ function getParent(inst) {
   return inst ? inst : null;
 }
 function accumulateEnterLeaveListenersForEvent(dispatchQueue, event, target, common, inCapturePhase) {
-  for (var registrationName = event._reactName, listeners = []; null !== target && target !== common; ) {
+  for (var registrationName = event._reactName, listeners2 = []; null !== target && target !== common; ) {
     var _instance3 = target, alternate = _instance3.alternate, stateNode = _instance3.stateNode;
     _instance3 = _instance3.tag;
     if (null !== alternate && alternate === common) break;
-    5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners.unshift(
+    5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners2.unshift(
       createDispatchListener(target, stateNode, alternate)
-    )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners.push(
+    )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners2.push(
       createDispatchListener(target, stateNode, alternate)
     )));
     target = target.return;
   }
-  0 !== listeners.length && dispatchQueue.push({ event, listeners });
+  0 !== listeners2.length && dispatchQueue.push({ event, listeners: listeners2 });
 }
 var NORMALIZE_NEWLINES_REGEX = /\r\n?/g, NORMALIZE_NULL_AND_REPLACEMENT_REGEX = /\u0000|\uFFFD/g;
 function normalizeMarkupForTextOrAttribute(markup) {
@@ -17375,11 +17375,11 @@ function preinitStyle(href, precedence, options) {
     precedence = precedence || "default";
     var resource = styles.get(key);
     if (!resource) {
-      var state = { loading: 0, preload: null };
+      var state2 = { loading: 0, preload: null };
       if (resource = ownerDocument.querySelector(
         getStylesheetSelectorFromKey(key)
       ))
-        state.loading = 5;
+        state2.loading = 5;
       else {
         href = assign(
           { rel: "stylesheet", href, "data-precedence": precedence },
@@ -17394,19 +17394,19 @@ function preinitStyle(href, precedence, options) {
           link.onerror = reject;
         });
         link.addEventListener("load", function() {
-          state.loading |= 1;
+          state2.loading |= 1;
         });
         link.addEventListener("error", function() {
-          state.loading |= 2;
+          state2.loading |= 2;
         });
-        state.loading |= 4;
+        state2.loading |= 4;
         insertStylesheet(resource, precedence, ownerDocument);
       }
       resource = {
         type: "stylesheet",
         instance: resource,
         count: 1,
-        state
+        state: state2
       };
       styles.set(key, resource);
     }
@@ -17514,11 +17514,11 @@ function stylesheetPropsFromRawProps(rawProps) {
     precedence: null
   });
 }
-function preloadStylesheet(ownerDocument, key, preloadProps, state) {
-  ownerDocument.querySelector('link[rel="preload"][as="style"][' + key + "]") ? state.loading = 1 : (key = ownerDocument.createElement("link"), state.preload = key, key.addEventListener("load", function() {
-    return state.loading |= 1;
+function preloadStylesheet(ownerDocument, key, preloadProps, state2) {
+  ownerDocument.querySelector('link[rel="preload"][as="style"][' + key + "]") ? state2.loading = 1 : (key = ownerDocument.createElement("link"), state2.preload = key, key.addEventListener("load", function() {
+    return state2.loading |= 1;
   }), key.addEventListener("error", function() {
-    return state.loading |= 2;
+    return state2.loading |= 2;
   }), setInitialProperties(key, "link", preloadProps), markNodeAsHoistable(key), ownerDocument.head.appendChild(key));
 }
 function getScriptKey(src) {
@@ -17676,7 +17676,7 @@ function noop$4() {
 }
 function suspendResource(hoistableRoot, resource, props) {
   if (null === suspendedState) throw Error(formatProdErrorMessage(475));
-  var state = suspendedState;
+  var state2 = suspendedState;
   if ("stylesheet" === resource.type && ("string" !== typeof props.media || false !== matchMedia(props.media).matches) && 0 === (resource.state.loading & 4)) {
     if (null === resource.instance) {
       var key = getStyleKey(props.href), instance = hoistableRoot.querySelector(
@@ -17684,7 +17684,7 @@ function suspendResource(hoistableRoot, resource, props) {
       );
       if (instance) {
         hoistableRoot = instance._p;
-        null !== hoistableRoot && "object" === typeof hoistableRoot && "function" === typeof hoistableRoot.then && (state.count++, state = onUnsuspend.bind(state), hoistableRoot.then(state, state));
+        null !== hoistableRoot && "object" === typeof hoistableRoot && "function" === typeof hoistableRoot.then && (state2.count++, state2 = onUnsuspend.bind(state2), hoistableRoot.then(state2, state2));
         resource.state.loading |= 4;
         resource.instance = instance;
         markNodeAsHoistable(instance);
@@ -17703,27 +17703,27 @@ function suspendResource(hoistableRoot, resource, props) {
       setInitialProperties(instance, "link", props);
       resource.instance = instance;
     }
-    null === state.stylesheets && (state.stylesheets = /* @__PURE__ */ new Map());
-    state.stylesheets.set(resource, hoistableRoot);
-    (hoistableRoot = resource.state.preload) && 0 === (resource.state.loading & 3) && (state.count++, resource = onUnsuspend.bind(state), hoistableRoot.addEventListener("load", resource), hoistableRoot.addEventListener("error", resource));
+    null === state2.stylesheets && (state2.stylesheets = /* @__PURE__ */ new Map());
+    state2.stylesheets.set(resource, hoistableRoot);
+    (hoistableRoot = resource.state.preload) && 0 === (resource.state.loading & 3) && (state2.count++, resource = onUnsuspend.bind(state2), hoistableRoot.addEventListener("load", resource), hoistableRoot.addEventListener("error", resource));
   }
 }
 function waitForCommitToBeReady() {
   if (null === suspendedState) throw Error(formatProdErrorMessage(475));
-  var state = suspendedState;
-  state.stylesheets && 0 === state.count && insertSuspendedStylesheets(state, state.stylesheets);
-  return 0 < state.count ? function(commit) {
+  var state2 = suspendedState;
+  state2.stylesheets && 0 === state2.count && insertSuspendedStylesheets(state2, state2.stylesheets);
+  return 0 < state2.count ? function(commit) {
     var stylesheetTimer = setTimeout(function() {
-      state.stylesheets && insertSuspendedStylesheets(state, state.stylesheets);
-      if (state.unsuspend) {
-        var unsuspend = state.unsuspend;
-        state.unsuspend = null;
+      state2.stylesheets && insertSuspendedStylesheets(state2, state2.stylesheets);
+      if (state2.unsuspend) {
+        var unsuspend = state2.unsuspend;
+        state2.unsuspend = null;
         unsuspend();
       }
     }, 6e4);
-    state.unsuspend = commit;
+    state2.unsuspend = commit;
     return function() {
-      state.unsuspend = null;
+      state2.unsuspend = null;
       clearTimeout(stylesheetTimer);
     };
   } : null;
@@ -17740,9 +17740,9 @@ function onUnsuspend() {
   }
 }
 var precedencesByRoot = null;
-function insertSuspendedStylesheets(state, resources) {
-  state.stylesheets = null;
-  null !== state.unsuspend && (state.count++, precedencesByRoot = /* @__PURE__ */ new Map(), resources.forEach(insertStylesheetIntoRoot, state), precedencesByRoot = null, onUnsuspend.call(state));
+function insertSuspendedStylesheets(state2, resources) {
+  state2.stylesheets = null;
+  null !== state2.unsuspend && (state2.count++, precedencesByRoot = /* @__PURE__ */ new Map(), resources.forEach(insertStylesheetIntoRoot, state2), precedencesByRoot = null, onUnsuspend.call(state2));
 }
 function insertStylesheetIntoRoot(root2, resource) {
   if (!(resource.state.loading & 4)) {
@@ -19043,9 +19043,9 @@ function wrapArray(array, startIndex) {
 var Root$3 = RovingFocusGroup;
 var Item = RovingFocusGroupItem;
 function useStateMachine(initialState, machine) {
-  return reactExports.useReducer((state, event) => {
-    const nextState = machine[state][event];
-    return nextState ?? state;
+  return reactExports.useReducer((state2, event) => {
+    const nextState = machine[state2][event];
+    return nextState ?? state2;
   }, initialState);
 }
 var Presence = (props) => {
@@ -19063,7 +19063,7 @@ function usePresence$1(present) {
   const prevPresentRef = reactExports.useRef(present);
   const prevAnimationNameRef = reactExports.useRef("none");
   const initialState = present ? "mounted" : "unmounted";
-  const [state, send] = useStateMachine(initialState, {
+  const [state2, send] = useStateMachine(initialState, {
     mounted: {
       UNMOUNT: "unmounted",
       ANIMATION_OUT: "unmountSuspended"
@@ -19078,8 +19078,8 @@ function usePresence$1(present) {
   });
   reactExports.useEffect(() => {
     const currentAnimationName = getAnimationName(stylesRef.current);
-    prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
-  }, [state]);
+    prevAnimationNameRef.current = state2 === "mounted" ? currentAnimationName : "none";
+  }, [state2]);
   useLayoutEffect2(() => {
     const styles = stylesRef.current;
     const wasPresent = prevPresentRef.current;
@@ -19141,7 +19141,7 @@ function usePresence$1(present) {
     }
   }, [node, send]);
   return {
-    isPresent: ["mounted", "unmountSuspended"].includes(state),
+    isPresent: ["mounted", "unmountSuspended"].includes(state2),
     ref: reactExports.useCallback((node2) => {
       stylesRef.current = node2 ? getComputedStyle(node2) : null;
       setNode(node2);
@@ -22102,16 +22102,11 @@ const Mail = createLucideIcon("mail", __iconNode$5);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$4 = [
-  [
-    "path",
-    {
-      d: "M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0",
-      key: "1r0f0z"
-    }
-  ],
-  ["circle", { cx: "12", cy: "10", r: "3", key: "ilqhr7" }]
+  ["path", { d: "M4 12h16", key: "1lakjw" }],
+  ["path", { d: "M4 18h16", key: "19g7jn" }],
+  ["path", { d: "M4 6h16", key: "1o0s65" }]
 ];
-const MapPin = createLucideIcon("map-pin", __iconNode$4);
+const Menu = createLucideIcon("menu", __iconNode$4);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -22119,18 +22114,6 @@ const MapPin = createLucideIcon("map-pin", __iconNode$4);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$3 = [
-  ["path", { d: "M4 12h16", key: "1lakjw" }],
-  ["path", { d: "M4 18h16", key: "19g7jn" }],
-  ["path", { d: "M4 6h16", key: "1o0s65" }]
-];
-const Menu = createLucideIcon("menu", __iconNode$3);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$2 = [
   [
     "path",
     {
@@ -22139,14 +22122,14 @@ const __iconNode$2 = [
     }
   ]
 ];
-const Phone = createLucideIcon("phone", __iconNode$2);
+const Phone = createLucideIcon("phone", __iconNode$3);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$1 = [
+const __iconNode$2 = [
   [
     "path",
     {
@@ -22159,7 +22142,22 @@ const __iconNode$1 = [
   ["path", { d: "M4 17v2", key: "vumght" }],
   ["path", { d: "M5 18H3", key: "zchphs" }]
 ];
-const Sparkles = createLucideIcon("sparkles", __iconNode$1);
+const Sparkles = createLucideIcon("sparkles", __iconNode$2);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$1 = [
+  ["path", { d: "M6 9H4.5a2.5 2.5 0 0 1 0-5H6", key: "17hqa7" }],
+  ["path", { d: "M18 9h1.5a2.5 2.5 0 0 0 0-5H18", key: "lmptdp" }],
+  ["path", { d: "M4 22h16", key: "57wxv0" }],
+  ["path", { d: "M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22", key: "1nw9bq" }],
+  ["path", { d: "M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22", key: "1np0yb" }],
+  ["path", { d: "M18 2H6v7a6 6 0 0 0 12 0V2Z", key: "u46fv3" }]
+];
+const Trophy = createLucideIcon("trophy", __iconNode$1);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -22404,7 +22402,7 @@ const maxElapsed = 40;
 function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
   let runNextFrame = false;
   let useDefaultElapsed = true;
-  const state = {
+  const state2 = {
     delta: 0,
     timestamp: 0,
     isProcessing: false
@@ -22417,22 +22415,22 @@ function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
   const { setup, read, resolveKeyframes, preUpdate, update, preRender, render, postRender } = steps;
   const processBatch = () => {
     const useManualTiming = MotionGlobalConfig.useManualTiming;
-    const timestamp = useManualTiming ? state.timestamp : performance.now();
+    const timestamp = useManualTiming ? state2.timestamp : performance.now();
     runNextFrame = false;
     if (!useManualTiming) {
-      state.delta = useDefaultElapsed ? 1e3 / 60 : Math.max(Math.min(timestamp - state.timestamp, maxElapsed), 1);
+      state2.delta = useDefaultElapsed ? 1e3 / 60 : Math.max(Math.min(timestamp - state2.timestamp, maxElapsed), 1);
     }
-    state.timestamp = timestamp;
-    state.isProcessing = true;
-    setup.process(state);
-    read.process(state);
-    resolveKeyframes.process(state);
-    preUpdate.process(state);
-    update.process(state);
-    preRender.process(state);
-    render.process(state);
-    postRender.process(state);
-    state.isProcessing = false;
+    state2.timestamp = timestamp;
+    state2.isProcessing = true;
+    setup.process(state2);
+    read.process(state2);
+    resolveKeyframes.process(state2);
+    preUpdate.process(state2);
+    update.process(state2);
+    preRender.process(state2);
+    render.process(state2);
+    postRender.process(state2);
+    state2.isProcessing = false;
     if (runNextFrame && allowKeepAlive) {
       useDefaultElapsed = false;
       scheduleNextBatch(processBatch);
@@ -22441,7 +22439,7 @@ function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
   const wake = () => {
     runNextFrame = true;
     useDefaultElapsed = true;
-    if (!state.isProcessing) {
+    if (!state2.isProcessing) {
       scheduleNextBatch(processBatch);
     }
   };
@@ -22459,7 +22457,7 @@ function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
       steps[stepsOrder[i]].cancel(process2);
     }
   };
-  return { schedule, cancel, state, steps };
+  return { schedule, cancel, state: state2, steps };
 }
 const { schedule: frame, cancel: cancelFrame, state: frameData, steps: frameSteps } = /* @__PURE__ */ createRenderBatcher(typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : noop$1, true);
 let now;
@@ -22875,10 +22873,10 @@ const maxGeneratorDuration = 2e4;
 function calcGeneratorDuration(generator) {
   let duration = 0;
   const timeStep = 50;
-  let state = generator.next(duration);
-  while (!state.done && duration < maxGeneratorDuration) {
+  let state2 = generator.next(duration);
+  while (!state2.done && duration < maxGeneratorDuration) {
     duration += timeStep;
-    state = generator.next(duration);
+    state2 = generator.next(duration);
   }
   return duration >= maxGeneratorDuration ? Infinity : duration;
 }
@@ -23037,7 +23035,7 @@ function spring(optionsOrVisualDuration = springDefaults.visualDuration, bounce 
   let { restSpeed, restDelta } = options;
   const origin = options.keyframes[0];
   const target = options.keyframes[options.keyframes.length - 1];
-  const state = { done: false, value: origin };
+  const state2 = { done: false, value: origin };
   const { stiffness, damping, mass, duration, velocity, isResolvedFromDuration } = getSpringOptions({
     ...options,
     velocity: -/* @__PURE__ */ millisecondsToSeconds(options.velocity || 0)
@@ -23098,19 +23096,19 @@ function spring(optionsOrVisualDuration = springDefaults.visualDuration, bounce 
         const cos = Math.cos(angularFreq * t);
         const current2 = target - envelope * (A * sin + initialDelta * cos);
         const currentVelocity = /* @__PURE__ */ secondsToMilliseconds(envelope * (sinCoeff * sin + cosCoeff * cos));
-        state.done = Math.abs(currentVelocity) <= restSpeed && Math.abs(target - current2) <= restDelta;
-        state.value = state.done ? target : current2;
-        return state;
+        state2.done = Math.abs(currentVelocity) <= restSpeed && Math.abs(target - current2) <= restDelta;
+        state2.value = state2.done ? target : current2;
+        return state2;
       }
       const current = resolveSpring(t);
       if (!isResolvedFromDuration) {
         const currentVelocity = /* @__PURE__ */ secondsToMilliseconds(resolveVelocity(t));
-        state.done = Math.abs(currentVelocity) <= restSpeed && Math.abs(target - current) <= restDelta;
+        state2.done = Math.abs(currentVelocity) <= restSpeed && Math.abs(target - current) <= restDelta;
       } else {
-        state.done = t >= duration;
+        state2.done = t >= duration;
       }
-      state.value = state.done ? target : current;
-      return state;
+      state2.value = state2.done ? target : current;
+      return state2;
     },
     toString: () => {
       const calculatedDuration = Math.min(calcGeneratorDuration(generator), maxGeneratorDuration);
@@ -23136,7 +23134,7 @@ function getGeneratorVelocity(resolveValue, t, current) {
 }
 function inertia({ keyframes: keyframes2, velocity = 0, power = 0.8, timeConstant = 325, bounceDamping = 10, bounceStiffness = 500, modifyTarget, min: min2, max: max2, restDelta = 0.5, restSpeed }) {
   const origin = keyframes2[0];
-  const state = {
+  const state2 = {
     done: false,
     value: origin
   };
@@ -23158,18 +23156,18 @@ function inertia({ keyframes: keyframes2, velocity = 0, power = 0.8, timeConstan
   const applyFriction = (t) => {
     const delta = calcDelta(t);
     const latest = calcLatest(t);
-    state.done = Math.abs(delta) <= restDelta;
-    state.value = state.done ? target : latest;
+    state2.done = Math.abs(delta) <= restDelta;
+    state2.value = state2.done ? target : latest;
   };
   let timeReachedBoundary;
   let spring$1;
   const checkCatchBoundary = (t) => {
-    if (!isOutOfBounds(state.value))
+    if (!isOutOfBounds(state2.value))
       return;
     timeReachedBoundary = t;
     spring$1 = spring({
-      keyframes: [state.value, nearestBoundary(state.value)],
-      velocity: getGeneratorVelocity(calcLatest, t, state.value),
+      keyframes: [state2.value, nearestBoundary(state2.value)],
+      velocity: getGeneratorVelocity(calcLatest, t, state2.value),
       // TODO: This should be passing * 1000
       damping: bounceDamping,
       stiffness: bounceStiffness,
@@ -23191,7 +23189,7 @@ function inertia({ keyframes: keyframes2, velocity = 0, power = 0.8, timeConstan
         return spring$1.next(t - timeReachedBoundary);
       } else {
         !hasUpdatedFrame && applyFriction(t);
-        return state;
+        return state2;
       }
     }
   };
@@ -23259,7 +23257,7 @@ function defaultEasing(values, easing) {
 }
 function keyframes({ duration = 300, keyframes: keyframeValues, times, ease: ease2 = "easeInOut" }) {
   const easingFunctions = isEasingArray(ease2) ? ease2.map(easingDefinitionToFunction) : easingDefinitionToFunction(ease2);
-  const state = {
+  const state2 = {
     done: false,
     value: keyframeValues[0]
   };
@@ -23275,9 +23273,9 @@ function keyframes({ duration = 300, keyframes: keyframeValues, times, ease: eas
   return {
     calculatedDuration: duration,
     next: (t) => {
-      state.value = mapTimeToKeyframe(t);
-      state.done = t >= duration;
-      return state;
+      state2.value = mapTimeToKeyframe(t);
+      state2.done = t >= duration;
+      return state2;
     }
   };
 }
@@ -23436,31 +23434,31 @@ class JSAnimation extends WithPromise {
       }
       elapsed = clamp$1(0, 1, iterationProgress) * resolvedDuration;
     }
-    let state;
+    let state2;
     if (isInDelayPhase) {
       this.delayState.value = keyframes2[0];
-      state = this.delayState;
+      state2 = this.delayState;
     } else {
-      state = frameGenerator.next(elapsed);
+      state2 = frameGenerator.next(elapsed);
     }
     if (mixKeyframes && !isInDelayPhase) {
-      state.value = mixKeyframes(state.value);
+      state2.value = mixKeyframes(state2.value);
     }
-    let { done } = state;
+    let { done } = state2;
     if (!isInDelayPhase && calculatedDuration !== null) {
       done = this.playbackSpeed >= 0 ? this.currentTime >= totalDuration : this.currentTime <= 0;
     }
     const isAnimationFinished = this.holdTime === null && (this.state === "finished" || this.state === "running" && done);
     if (isAnimationFinished && type !== inertia) {
-      state.value = getFinalKeyframe(keyframes2, this.options, finalKeyframe, this.speed);
+      state2.value = getFinalKeyframe(keyframes2, this.options, finalKeyframe, this.speed);
     }
     if (onUpdate) {
-      onUpdate(state.value);
+      onUpdate(state2.value);
     }
     if (isAnimationFinished) {
       this.finish();
     }
-    return state;
+    return state2;
   }
   /**
    * Allows the returned animation to be awaited or promise-chained. Currently
@@ -24000,8 +23998,8 @@ class NativeAnimation extends WithPromise {
     if (this.isStopped)
       return;
     this.isStopped = true;
-    const { state } = this;
-    if (state === "idle" || state === "finished") {
+    const { state: state2 } = this;
+    if (state2 === "idle" || state2 === "finished") {
       return;
     }
     if (this.updateMotionValue) {
@@ -24529,12 +24527,12 @@ const animateMotionValue = (name, value, target, transition = {}, element, isHan
   return valueTransition.isSync ? new JSAnimation(options) : new AsyncMotionValueAnimation(options);
 };
 function getValueState(visualElement) {
-  const state = [{}, {}];
+  const state2 = [{}, {}];
   visualElement == null ? void 0 : visualElement.values.forEach((value, key) => {
-    state[0][key] = value.get();
-    state[1][key] = value.getVelocity();
+    state2[0][key] = value.get();
+    state2[1][key] = value.getVelocity();
   });
-  return state;
+  return state2;
 }
 function resolveVariantFromProps(props, definition, custom, visualElement) {
   if (typeof definition === "function") {
@@ -26278,8 +26276,8 @@ function buildTransform(latestValues, transform, transformTemplate) {
   }
   return transformString;
 }
-function buildHTMLStyles(state, latestValues, transformTemplate) {
-  const { style: style2, vars, transformOrigin: transformOrigin2 } = state;
+function buildHTMLStyles(state2, latestValues, transformTemplate) {
+  const { style: style2, vars, transformOrigin: transformOrigin2 } = state2;
   let hasTransform2 = false;
   let hasTransformOrigin = false;
   for (const key in latestValues) {
@@ -26302,7 +26300,7 @@ function buildHTMLStyles(state, latestValues, transformTemplate) {
   }
   if (!latestValues.transform) {
     if (hasTransform2 || transformTemplate) {
-      style2.transform = buildTransform(latestValues, state.transform, transformTemplate);
+      style2.transform = buildTransform(latestValues, state2.transform, transformTemplate);
     } else if (style2.transform) {
       style2.transform = "none";
     }
@@ -26446,7 +26444,7 @@ const cssMotionPathProperties = [
   "offsetRotate",
   "offsetAnchor"
 ];
-function buildSVGAttrs(state, {
+function buildSVGAttrs(state2, {
   attrX,
   attrY,
   attrScale,
@@ -26456,16 +26454,16 @@ function buildSVGAttrs(state, {
   // This is object creation, which we try to avoid per-frame.
   ...latest
 }, isSVGTag2, transformTemplate, styleProp) {
-  buildHTMLStyles(state, latest, transformTemplate);
+  buildHTMLStyles(state2, latest, transformTemplate);
   if (isSVGTag2) {
-    if (state.style.viewBox) {
-      state.attrs.viewBox = state.style.viewBox;
+    if (state2.style.viewBox) {
+      state2.attrs.viewBox = state2.style.viewBox;
     }
     return;
   }
-  state.attrs = state.style;
-  state.style = {};
-  const { attrs, style: style2 } = state;
+  state2.attrs = state2.style;
+  state2.style = {};
+  const { attrs, style: style2 } = state2;
   if (attrs.transform) {
     style2.transform = attrs.transform;
     delete attrs.transform;
@@ -26610,7 +26608,7 @@ function createAnimateFunction(visualElement) {
 }
 function createAnimationState(visualElement) {
   let animate = createAnimateFunction(visualElement);
-  let state = createState();
+  let state2 = createState();
   let isInitialRender = true;
   let wasReset = false;
   const buildResolvedTypeValues = (type) => (acc, definition) => {
@@ -26634,7 +26632,7 @@ function createAnimationState(visualElement) {
     let removedVariantIndex = Infinity;
     for (let i = 0; i < numAnimationTypes; i++) {
       const type = reversePriorityOrder[i];
-      const typeState = state[type];
+      const typeState = state2[type];
       const prop = props[type] !== void 0 ? props[type] : context[type];
       const propIsVariant = isVariantLabel(prop);
       const activeDelta = type === changedActiveType ? typeState.isActive : null;
@@ -26765,16 +26763,16 @@ function createAnimationState(visualElement) {
   }
   function setActive(type, isActive) {
     var _a2;
-    if (state[type].isActive === isActive)
+    if (state2[type].isActive === isActive)
       return Promise.resolve();
     (_a2 = visualElement.variantChildren) == null ? void 0 : _a2.forEach((child) => {
       var _a3;
       return (_a3 = child.animationState) == null ? void 0 : _a3.setActive(type, isActive);
     });
-    state[type].isActive = isActive;
+    state2[type].isActive = isActive;
     const animations2 = animateChanges(type);
-    for (const key in state) {
-      state[key].protectedKeys = {};
+    for (const key in state2) {
+      state2[key].protectedKeys = {};
     }
     return animations2;
   }
@@ -26782,9 +26780,9 @@ function createAnimationState(visualElement) {
     animateChanges,
     setActive,
     setAnimateFunction,
-    getState: () => state,
+    getState: () => state2,
     reset: () => {
-      state = createState();
+      state2 = createState();
       wasReset = true;
     }
   };
@@ -28044,8 +28042,8 @@ function createProjectionNode$1({ attachResizeListener, defaultParent, measureSc
         const { correct, applyTo, isCSSVariable } = scaleCorrectors[key];
         const corrected = transform === "none" ? valuesToRender[key] : correct(valuesToRender[key], lead);
         if (applyTo) {
-          const num = applyTo.length;
-          for (let i = 0; i < num; i++) {
+          const num2 = applyTo.length;
+          for (let i = 0; i < num2; i++) {
             targetStyle[applyTo[i]] = corrected;
           }
         } else {
@@ -28430,18 +28428,18 @@ const PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, p
 function newChildrenMap() {
   return /* @__PURE__ */ new Map();
 }
-function usePresence(subscribe = true) {
+function usePresence(subscribe2 = true) {
   const context = reactExports.useContext(PresenceContext);
   if (context === null)
     return [true, null];
   const { isPresent, onExitComplete, register } = context;
   const id2 = reactExports.useId();
   reactExports.useEffect(() => {
-    if (subscribe) {
+    if (subscribe2) {
       return register(id2);
     }
-  }, [subscribe]);
-  const safeToRemove = reactExports.useCallback(() => subscribe && onExitComplete && onExitComplete(id2), [id2, onExitComplete, subscribe]);
+  }, [subscribe2]);
+  const safeToRemove = reactExports.useCallback(() => subscribe2 && onExitComplete && onExitComplete(id2), [id2, onExitComplete, subscribe2]);
   return !isPresent && onExitComplete ? [false, safeToRemove] : [true];
 }
 const getChildKey = (child) => child.key || "";
@@ -28667,9 +28665,9 @@ function copyRawValuesOnly(target, source, props) {
 }
 function useInitialMotionValues({ transformTemplate }, visualState) {
   return reactExports.useMemo(() => {
-    const state = createHtmlRenderState();
-    buildHTMLStyles(state, visualState, transformTemplate);
-    return Object.assign({}, state.vars, state.style);
+    const state2 = createHtmlRenderState();
+    buildHTMLStyles(state2, visualState, transformTemplate);
+    return Object.assign({}, state2.vars, state2.style);
   }, [visualState]);
 }
 function useStyle(props, visualState) {
@@ -28699,11 +28697,11 @@ const createSvgRenderState = () => ({
 });
 function useSVGProps(props, visualState, _isStatic, Component2) {
   const visualProps = reactExports.useMemo(() => {
-    const state = createSvgRenderState();
-    buildSVGAttrs(state, visualState, isSVGTag(Component2), props.transformTemplate, props.style);
+    const state2 = createSvgRenderState();
+    buildSVGAttrs(state2, visualState, isSVGTag(Component2), props.transformTemplate, props.style);
     return {
-      ...state.attrs,
-      style: { ...state.style }
+      ...state2.attrs,
+      style: { ...state2.style }
     };
   }, [visualState]);
   if (props.style) {
@@ -28778,11 +28776,11 @@ function useRender(Component2, props, ref, { latestValues }, isStatic, forwardMo
   });
 }
 function makeState({ scrapeMotionValuesFromProps: scrapeMotionValuesFromProps2, createRenderState }, props, context, presenceContext) {
-  const state = {
+  const state2 = {
     latestValues: makeLatestValues(props, context, presenceContext, scrapeMotionValuesFromProps2),
     renderState: createRenderState()
   };
-  return state;
+  return state2;
 }
 function makeLatestValues(props, context, presenceContext, scrapeMotionValues) {
   const values = {};
@@ -30855,14 +30853,14 @@ function PlanetBackground({ variant }) {
   );
 }
 const pills = [
-  { icon: MapPin, label: "Bharatpur, Rajasthan, India" },
+  { icon: Trophy, label: "LeetCode · Top 7.63% · 1817 peak" },
   { icon: Briefcase, label: "Fresher · Class of 2026" },
-  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.64" }
+  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.65" }
 ];
 const storyParagraphs = [
-  "I'm a Computer Science fresher from Government Engineering College Bharatpur — a backend-focused software engineer who loves building things that scale. Node.js, Express, MongoDB, REST APIs, JWT auth — these are my daily tools.",
-  "Problem solving is my gym. 500+ problems solved across LeetCode, CodeChef & GFG — Easy, Medium, and Hard. Data structures and algorithms aren't just interview prep for me — they're how I think.",
-  "At Lighthouse Info Systems, I built an e-commerce backend system from scratch: 500+ concurrent requests, sub-200ms response time, 25-30% query performance boost through smart indexing. Real numbers, real impact."
+  "I'm a backend-focused software engineer (B.Tech CSE, 2026, Government Engineering College Bharatpur) with internship experience building REST APIs, authentication and database-backed workflows in Node.js.",
+  "Beyond the internship I build systems that have to be correct under pressure: a real-time collaborative editor on Yjs CRDTs, and Agent Trust Lab, a Python system that puts an LLM behind signed-token authorization, backed by 86 automated tests.",
+  "Problem solving is my gym. 600+ DSA problems across LeetCode, CodeChef & GeeksforGeeks, top 7.63% on LeetCode with a 1817 peak contest rating. I also coordinated the Python Programming Club, running workshops, events and a hackathon for 50+ students."
 ];
 const experiences = [
   {
@@ -30870,10 +30868,10 @@ const experiences = [
     company: "Lighthouse Info Systems Pvt Ltd",
     period: "May 2025 – Jul 2025",
     bullets: [
-      "Developed backend modules for product management, cart operations, and order processing using Node.js, Express.js, and MongoDB.",
-      "Implemented secure JWT-based authentication and authorization while designing REST APIs and optimized database schemas for scalable application workflows.",
-      "Engineered order lifecycle management with validation, error handling, and reliable API integration for consistent backend functionality.",
-      "Technologies: Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman"
+      "Built backend modules for product management, cart operations and order processing in Node.js, Express.js and MongoDB, implementing the end-to-end order workflow.",
+      "Designed REST APIs with JWT authentication and role-based access control (RBAC) over structured MongoDB schemas.",
+      "Added input validation, structured error handling and API tests across endpoints for consistent behavior.",
+      "Technologies: Node.js, Express.js, MongoDB, JWT, RBAC, REST APIs"
     ]
   }
 ];
@@ -31077,8 +31075,8 @@ function About() {
                                   style: { background: "oklch(0.17 0.02 240 / 0.6)" },
                                   children: [
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-foreground text-lg mb-1", children: "B.Tech in Computer Science and Engineering" }),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-base font-semibold", children: "Government Engineering College Bharatpur, Rajasthan" }),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.64" }),
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-base font-semibold", children: "Government Engineering College Bharatpur" }),
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "2022 – 2026 · CGPA 8.65" }),
                                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2 mt-3", children: [
                                       "DSA",
                                       "OS",
@@ -31513,8 +31511,8 @@ function Contact() {
                           color: "oklch(0.6 0.012 240)"
                         },
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "📍" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Shikohabad,Uttar Pradesh, India · Actively seeking full-time roles" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "💼" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Open to full-time software engineering roles" })
                         ]
                       }
                     )
@@ -31734,9 +31732,15 @@ const footerLinks = [
   {
     heading: "Projects",
     links: [
-      { label: "Real-Time-Collaborative Editor", href: "#" },
-      { label: "Hacker News Scraper", href: "#" }
-      // { label: "Portfolio CMS", href: "#" },
+      { label: "Agent Trust Lab", href: "https://agent-trust-lab.vercel.app/" },
+      {
+        label: "Real Time Collaborative Editor",
+        href: "https://github.com/anubhav1450/real-time-editor"
+      },
+      {
+        label: "Hacker News Scraper",
+        href: "https://github.com/anubhav1450/Hacker-News-Scraper"
+      }
     ]
   }
 ];
@@ -31758,7 +31762,7 @@ function Footer() {
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-8 mb-10", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-span-2 md:col-span-1", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-foreground mb-2", children: "Anubhav Kulshreshtha" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-xs leading-relaxed mb-4", children: "Software Engineer on a mission to explore the digital cosmos and build things that matter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-xs leading-relaxed mb-4", children: "Backend-focused software engineer building reliable APIs and real-time systems." }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-3", children: socialLinks.map(({ Icon: Icon2, href, label }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -31779,6 +31783,7 @@ function Footer() {
           "a",
           {
             href: link.href,
+            ...link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {},
             "data-ocid": "footer.link",
             className: "text-muted-foreground text-sm hover:text-foreground transition-colors",
             children: link.label
@@ -31787,9 +31792,14 @@ function Footer() {
       ] }, col.heading)),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-foreground text-xs font-semibold uppercase tracking-widest mb-4", children: "Tech Stack" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: ["Java", "React", "JavaScript", "Node.js", "MongoDB", "Express"].map(
-          (tech) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-muted-foreground text-sm", children: tech }, tech)
-        ) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "space-y-2", children: [
+          "Python",
+          "JavaScript",
+          "Node.js",
+          "FastAPI",
+          "MongoDB",
+          "React.js"
+        ].map((tech) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-muted-foreground text-sm", children: tech }, tech)) })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground", children: [
@@ -32386,7 +32396,7 @@ function computeCoordsFromPlacement(_ref, placement, rtl) {
   }
   return coords;
 }
-async function detectOverflow(state, options) {
+async function detectOverflow(state2, options) {
   var _await$platform$isEle;
   if (options === void 0) {
     options = {};
@@ -32398,14 +32408,14 @@ async function detectOverflow(state, options) {
     rects,
     elements,
     strategy
-  } = state;
+  } = state2;
   const {
     boundary = "clippingAncestors",
     rootBoundary = "viewport",
     elementContext = "floating",
     altBoundary = false,
     padding = 0
-  } = evaluate(options, state);
+  } = evaluate(options, state2);
   const paddingObject = getPaddingObject(padding);
   const altContext = elementContext === "floating" ? "reference" : "floating";
   const element = elements[altBoundary ? altContext : elementContext];
@@ -32533,7 +32543,7 @@ const computePosition$1 = async (reference, floating, config) => {
 const arrow$3 = (options) => ({
   name: "arrow",
   options,
-  async fn(state) {
+  async fn(state2) {
     const {
       x: x2,
       y,
@@ -32542,11 +32552,11 @@ const arrow$3 = (options) => ({
       platform: platform2,
       elements,
       middlewareData
-    } = state;
+    } = state2;
     const {
       element,
       padding = 0
-    } = evaluate(options, state) || {};
+    } = evaluate(options, state2) || {};
     if (element == null) {
       return {};
     }
@@ -32599,7 +32609,7 @@ const flip$2 = function(options) {
   return {
     name: "flip",
     options,
-    async fn(state) {
+    async fn(state2) {
       var _middlewareData$arrow, _middlewareData$flip;
       const {
         placement,
@@ -32608,7 +32618,7 @@ const flip$2 = function(options) {
         initialPlacement,
         platform: platform2,
         elements
-      } = state;
+      } = state2;
       const {
         mainAxis: checkMainAxis = true,
         crossAxis: checkCrossAxis = true,
@@ -32617,7 +32627,7 @@ const flip$2 = function(options) {
         fallbackAxisSideDirection = "none",
         flipAlignment = true,
         ...detectOverflowOptions
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
         return {};
       }
@@ -32631,7 +32641,7 @@ const flip$2 = function(options) {
         fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
       }
       const placements = [initialPlacement, ...fallbackPlacements];
-      const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
+      const overflow = await platform2.detectOverflow(state2, detectOverflowOptions);
       const overflows = [];
       let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
       if (checkMainAxis) {
@@ -32719,18 +32729,18 @@ const hide$2 = function(options) {
   return {
     name: "hide",
     options,
-    async fn(state) {
+    async fn(state2) {
       const {
         rects,
         platform: platform2
-      } = state;
+      } = state2;
       const {
         strategy = "referenceHidden",
         ...detectOverflowOptions
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       switch (strategy) {
         case "referenceHidden": {
-          const overflow = await platform2.detectOverflow(state, {
+          const overflow = await platform2.detectOverflow(state2, {
             ...detectOverflowOptions,
             elementContext: "reference"
           });
@@ -32743,7 +32753,7 @@ const hide$2 = function(options) {
           };
         }
         case "escaped": {
-          const overflow = await platform2.detectOverflow(state, {
+          const overflow = await platform2.detectOverflow(state2, {
             ...detectOverflowOptions,
             altBoundary: true
           });
@@ -32763,19 +32773,19 @@ const hide$2 = function(options) {
   };
 };
 const originSides = /* @__PURE__ */ new Set(["left", "top"]);
-async function convertValueToCoords(state, options) {
+async function convertValueToCoords(state2, options) {
   const {
     placement,
     platform: platform2,
     elements
-  } = state;
+  } = state2;
   const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
   const side = getSide(placement);
   const alignment = getAlignment(placement);
   const isVertical = getSideAxis(placement) === "y";
   const mainAxisMulti = originSides.has(side) ? -1 : 1;
   const crossAxisMulti = rtl && isVertical ? -1 : 1;
-  const rawValue = evaluate(options, state);
+  const rawValue = evaluate(options, state2);
   let {
     mainAxis,
     crossAxis,
@@ -32807,15 +32817,15 @@ const offset$2 = function(options) {
   return {
     name: "offset",
     options,
-    async fn(state) {
+    async fn(state2) {
       var _middlewareData$offse, _middlewareData$arrow;
       const {
         x: x2,
         y,
         placement,
         middlewareData
-      } = state;
-      const diffCoords = await convertValueToCoords(state, options);
+      } = state2;
+      const diffCoords = await convertValueToCoords(state2, options);
       if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
         return {};
       }
@@ -32837,13 +32847,13 @@ const shift$2 = function(options) {
   return {
     name: "shift",
     options,
-    async fn(state) {
+    async fn(state2) {
       const {
         x: x2,
         y,
         placement,
         platform: platform2
-      } = state;
+      } = state2;
       const {
         mainAxis: checkMainAxis = true,
         crossAxis: checkCrossAxis = false,
@@ -32860,12 +32870,12 @@ const shift$2 = function(options) {
           }
         },
         ...detectOverflowOptions
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       const coords = {
         x: x2,
         y
       };
-      const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
+      const overflow = await platform2.detectOverflow(state2, detectOverflowOptions);
       const crossAxis = getSideAxis(getSide(placement));
       const mainAxis = getOppositeAxis(crossAxis);
       let mainAxisCoord = coords[mainAxis];
@@ -32885,7 +32895,7 @@ const shift$2 = function(options) {
         crossAxisCoord = clamp(min2, crossAxisCoord, max2);
       }
       const limitedCoords = limiter.fn({
-        ...state,
+        ...state2,
         [mainAxis]: mainAxisCoord,
         [crossAxis]: crossAxisCoord
       });
@@ -32909,19 +32919,19 @@ const limitShift$2 = function(options) {
   }
   return {
     options,
-    fn(state) {
+    fn(state2) {
       const {
         x: x2,
         y,
         placement,
         rects,
         middlewareData
-      } = state;
+      } = state2;
       const {
         offset: offset2 = 0,
         mainAxis: checkMainAxis = true,
         crossAxis: checkCrossAxis = true
-      } = evaluate(options, state);
+      } = evaluate(options, state2);
       const coords = {
         x: x2,
         y
@@ -32930,7 +32940,7 @@ const limitShift$2 = function(options) {
       const mainAxis = getOppositeAxis(crossAxis);
       let mainAxisCoord = coords[mainAxis];
       let crossAxisCoord = coords[crossAxis];
-      const rawOffset = evaluate(offset2, state);
+      const rawOffset = evaluate(offset2, state2);
       const computedOffset = typeof rawOffset === "number" ? {
         mainAxis: rawOffset,
         crossAxis: 0
@@ -32975,20 +32985,20 @@ const size$2 = function(options) {
   return {
     name: "size",
     options,
-    async fn(state) {
+    async fn(state2) {
       var _state$middlewareData, _state$middlewareData2;
       const {
         placement,
         rects,
         platform: platform2,
         elements
-      } = state;
+      } = state2;
       const {
         apply = () => {
         },
         ...detectOverflowOptions
-      } = evaluate(options, state);
-      const overflow = await platform2.detectOverflow(state, detectOverflowOptions);
+      } = evaluate(options, state2);
+      const overflow = await platform2.detectOverflow(state2, detectOverflowOptions);
       const side = getSide(placement);
       const alignment = getAlignment(placement);
       const isYAxis = getSideAxis(placement) === "y";
@@ -33009,13 +33019,13 @@ const size$2 = function(options) {
       const maximumClippingWidth = width - overflow.left - overflow.right;
       const overflowAvailableHeight = min(height - overflow[heightSide], maximumClippingHeight);
       const overflowAvailableWidth = min(width - overflow[widthSide], maximumClippingWidth);
-      const noShift = !state.middlewareData.shift;
+      const noShift = !state2.middlewareData.shift;
       let availableHeight = overflowAvailableHeight;
       let availableWidth = overflowAvailableWidth;
-      if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
+      if ((_state$middlewareData = state2.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
         availableWidth = maximumClippingWidth;
       }
-      if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
+      if ((_state$middlewareData2 = state2.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
         availableHeight = maximumClippingHeight;
       }
       if (noShift && !alignment) {
@@ -33030,7 +33040,7 @@ const size$2 = function(options) {
         }
       }
       await apply({
-        ...state,
+        ...state2,
         availableWidth,
         availableHeight
       });
@@ -33657,7 +33667,7 @@ function observeMove(element, onMove) {
     (_io = io) == null || _io.disconnect();
     io = null;
   }
-  function refresh(skip, threshold) {
+  function refresh2(skip, threshold) {
     if (skip === void 0) {
       skip = false;
     }
@@ -33692,18 +33702,18 @@ function observeMove(element, onMove) {
       const ratio = entries[0].intersectionRatio;
       if (ratio !== threshold) {
         if (!isFirstUpdate) {
-          return refresh();
+          return refresh2();
         }
         if (!ratio) {
           timeoutId = setTimeout(() => {
-            refresh(false, 1e-7);
+            refresh2(false, 1e-7);
           }, 1e3);
         } else {
-          refresh(false, ratio);
+          refresh2(false, ratio);
         }
       }
       if (ratio === 1 && !rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
-        refresh();
+        refresh2();
       }
       isFirstUpdate = false;
     }
@@ -33718,7 +33728,7 @@ function observeMove(element, onMove) {
     }
     io.observe(element);
   }
-  refresh(true);
+  refresh2(true);
   return cleanup;
 }
 function autoUpdate(reference, floating, update, options) {
@@ -34040,17 +34050,17 @@ const arrow$1 = (options) => {
   return {
     name: "arrow",
     options,
-    fn(state) {
+    fn(state2) {
       const {
         element,
         padding
-      } = typeof options === "function" ? options(state) : options;
+      } = typeof options === "function" ? options(state2) : options;
       if (element && isRef(element)) {
         if (element.current != null) {
           return arrow$2({
             element: element.current,
             padding
-          }).fn(state);
+          }).fn(state2);
         }
         return {};
       }
@@ -34058,7 +34068,7 @@ const arrow$1 = (options) => {
         return arrow$2({
           element,
           padding
-        }).fn(state);
+        }).fn(state2);
       }
       return {};
     }
@@ -35000,6 +35010,171 @@ function TooltipContent({
     }
   ) });
 }
+const LEETCODE_USERNAME = "Anubhav9457";
+const LEETCODE_PROFILE_URL = `https://leetcode.com/u/${LEETCODE_USERNAME}/`;
+const FALLBACK = {
+  totalSolved: 605,
+  easySolved: 294,
+  mediumSolved: 257,
+  hardSolved: 54,
+  totalQuestions: 4073,
+  acceptanceRate: 71.2,
+  ranking: 141642,
+  contestRating: 1817,
+  contestTopPercentage: 7.66,
+  contestsAttended: 31
+};
+const CACHE_KEY = `leetcode-stats:${LEETCODE_USERNAME}`;
+const REFRESH_MS = 5 * 60 * 1e3;
+const TIMEOUT_MS = 2e4;
+const ALFA = "https://alfa-leetcode-api.onrender.com";
+const FAISAL = "https://leetcode-api-faisalshohag.vercel.app";
+async function getJson(url) {
+  const controller = new AbortController();
+  const timer2 = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`${res.status} ${url}`);
+    return await res.json();
+  } finally {
+    clearTimeout(timer2);
+  }
+}
+const num = (v2) => typeof v2 === "number" && Number.isFinite(v2) ? v2 : null;
+function acceptance(data) {
+  var _a2, _b2, _c2, _d2;
+  const ac = num((_b2 = (_a2 = data.acSubmissionNum) == null ? void 0 : _a2[0]) == null ? void 0 : _b2.submissions);
+  const total = num((_d2 = (_c2 = data.totalSubmissionNum) == null ? void 0 : _c2[0]) == null ? void 0 : _d2.submissions);
+  return ac !== null && total ? Math.round(ac / total * 1e3) / 10 : null;
+}
+async function fetchFromAlfa(prev) {
+  const u = encodeURIComponent(LEETCODE_USERNAME);
+  const [solved, contest, profile] = await Promise.allSettled([
+    getJson(`${ALFA}/${u}/solved`),
+    getJson(`${ALFA}/${u}/contest`),
+    getJson(`${ALFA}/${u}`)
+  ]);
+  if (solved.status !== "fulfilled") throw solved.reason;
+  const s = solved.value;
+  const total = num(s.solvedProblem);
+  if (total === null || total <= 0) throw new Error("alfa: no solved count");
+  const c = contest.status === "fulfilled" ? contest.value : null;
+  const p = profile.status === "fulfilled" ? profile.value : null;
+  const rating = num(c == null ? void 0 : c.contestRating);
+  return {
+    totalSolved: total,
+    easySolved: num(s.easySolved) ?? prev.easySolved,
+    mediumSolved: num(s.mediumSolved) ?? prev.mediumSolved,
+    hardSolved: num(s.hardSolved) ?? prev.hardSolved,
+    totalQuestions: FALLBACK.totalQuestions,
+    acceptanceRate: acceptance(s) ?? prev.acceptanceRate,
+    ranking: num(p == null ? void 0 : p.ranking) ?? prev.ranking,
+    contestRating: rating !== null ? Math.round(rating) : prev.contestRating,
+    contestTopPercentage: num(c == null ? void 0 : c.contestTopPercentage) ?? prev.contestTopPercentage,
+    contestsAttended: num(c == null ? void 0 : c.contestAttend) ?? prev.contestsAttended
+  };
+}
+async function fetchFromFaisal() {
+  const d = await getJson(`${FAISAL}/${encodeURIComponent(LEETCODE_USERNAME)}`);
+  const total = num(d.totalSolved);
+  if (total === null || total <= 0) throw new Error("faisal: no solved count");
+  return {
+    totalSolved: total,
+    easySolved: num(d.easySolved) ?? FALLBACK.easySolved,
+    mediumSolved: num(d.mediumSolved) ?? FALLBACK.mediumSolved,
+    hardSolved: num(d.hardSolved) ?? FALLBACK.hardSolved,
+    totalQuestions: num(d.totalQuestions) ?? FALLBACK.totalQuestions,
+    acceptanceRate: num(d.acceptanceRate) ?? FALLBACK.acceptanceRate,
+    ranking: num(d.ranking) ?? FALLBACK.ranking,
+    contestRating: FALLBACK.contestRating,
+    contestTopPercentage: FALLBACK.contestTopPercentage,
+    contestsAttended: FALLBACK.contestsAttended
+  };
+}
+function readCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if ((parsed == null ? void 0 : parsed.stats) && num(parsed.stats.totalSolved) && num(parsed.updatedAt))
+      return parsed;
+  } catch {
+  }
+  return null;
+}
+function writeCache(stats, updatedAt) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ stats, updatedAt }));
+  } catch {
+  }
+}
+const cached = readCache();
+let state = cached ? {
+  stats: cached.stats,
+  source: "cached",
+  updatedAt: cached.updatedAt,
+  loading: true
+} : { stats: FALLBACK, source: "fallback", updatedAt: null, loading: true };
+const listeners = /* @__PURE__ */ new Set();
+let timer = null;
+let inflight = null;
+function setState(next) {
+  state = next;
+  for (const l of listeners) l();
+}
+function refresh() {
+  if (inflight) return inflight;
+  inflight = (async () => {
+    try {
+      let stats;
+      try {
+        stats = await fetchFromAlfa(state.stats);
+      } catch {
+        stats = await fetchFromFaisal();
+      }
+      const now2 = Date.now();
+      writeCache(stats, now2);
+      setState({ stats, source: "live", updatedAt: now2, loading: false });
+    } catch {
+      setState({
+        ...state,
+        source: state.updatedAt ? "cached" : "fallback",
+        loading: false
+      });
+    } finally {
+      inflight = null;
+    }
+  })();
+  return inflight;
+}
+function onVisibility() {
+  if (document.visibilityState === "visible") void refresh();
+}
+function subscribe(listener) {
+  listeners.add(listener);
+  if (listeners.size === 1) {
+    void refresh();
+    timer = setInterval(() => {
+      if (document.visibilityState === "visible") void refresh();
+    }, REFRESH_MS);
+    document.addEventListener("visibilitychange", onVisibility);
+  }
+  return () => {
+    listeners.delete(listener);
+    if (listeners.size === 0) {
+      if (timer) clearInterval(timer);
+      timer = null;
+      document.removeEventListener("visibilitychange", onVisibility);
+    }
+  };
+}
+function useLeetCodeStats() {
+  return reactExports.useSyncExternalStore(
+    subscribe,
+    () => state,
+    () => state
+  );
+}
 function HeroPhoto() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.div,
@@ -35092,6 +35267,7 @@ function DevBackgroundSnippets() {
   );
 }
 function Hero({ onViewResume, onViewRealResume }) {
+  const { stats: lc } = useLeetCodeStats();
   const scrollToProjects = () => {
     var _a2;
     (_a2 = document.getElementById("projects")) == null ? void 0 : _a2.scrollIntoView({ behavior: "smooth" });
@@ -35122,8 +35298,8 @@ function Hero({ onViewResume, onViewRealResume }) {
                       "Hi, I'm ",
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary", children: "Anubhav" })
                     ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-2xl font-semibold mb-5", children: "Full Stack Software Engineer" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-xl leading-relaxed mb-8 max-w-md", children: "I build scalable backend systems, craft clean APIs, and ship production-ready code. I solve 500+ problems across LeetCode, CodeChef & GFG for fun and debug other people's code for sport. Space is just my aesthetic." }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-primary text-2xl font-semibold mb-5", children: "Backend-Focused Software Engineer" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-xl leading-relaxed mb-8 max-w-md", children: "I build REST APIs, authentication and database-backed workflows in Node.js, and systems that stay correct under pressure: a real-time editor on Yjs CRDTs and an LLM guarded by signed tokens. Top 7.63% on LeetCode. Space is just my aesthetic." }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 flex-wrap", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsxs(
                         Button,
@@ -35205,9 +35381,15 @@ function Hero({ onViewResume, onViewRealResume }) {
                       )
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-8 mt-10", children: [
-                      { value: "1+", label: "Years Shipping Code" },
-                      { value: "10+", label: "Projects Built" },
-                      { value: "500+ 🚀", label: "Problems Across Platforms" }
+                      {
+                        value: String(lc.totalSolved),
+                        label: "LeetCode Problems Solved"
+                      },
+                      {
+                        value: String(lc.contestRating ?? "—"),
+                        label: "LeetCode Contest Rating"
+                      },
+                      { value: "86", label: "Automated Tests · Agent Trust Lab" }
                     ].map((stat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-3xl font-bold text-primary", children: stat.value }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: stat.label })
@@ -35226,7 +35408,7 @@ function Hero({ onViewResume, onViewRealResume }) {
                     /* @__PURE__ */ jsxRuntimeExports.jsx(HeroPhoto, {}),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-2 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-left-4 bg-card border border-border rounded-xl px-4 py-3 shadow-card", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: "Ready for Launch —" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base font-semibold text-primary", children: "Freelance & Full-time roles" })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base font-semibold text-primary", children: "Open to full-time roles" })
                     ] })
                   ]
                 }
@@ -36981,23 +37163,31 @@ const techIconMap = {
   SQL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
   // Backend
   "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-  "Express.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+  "Express.js": "https://cdn.simpleicons.org/express/ffffff",
+  FastAPI: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+  "REST APIs": "",
+  WebSockets: "https://cdn.simpleicons.org/socketdotio/ffffff",
+  "JWT Authentication": "",
+  RBAC: "",
+  // Databases
   MongoDB: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
   MySQL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-  "REST APIs": "",
-  "JWT/RBAC": "",
+  SQLite: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
   // Frontend
-  HTML: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-  CSS: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-  "Tailwind CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-  Bootstrap: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+  HTML5: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+  CSS3: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  TailwindCSS: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
   "React.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-  Vite: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg",
-  // Databases & DevOps
+  // Cloud & Tools
+  "AWS ECS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
   Docker: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-  "Git/GitHub": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  Vercel: "https://cdn.simpleicons.org/vercel/ffffff",
+  Render: "",
+  Git: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  Linux: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
   Postman: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
-  "AWS (EC2, S3)": "",
+  Playwright: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg",
+  "LLM API integration": "",
   // LeetCode (used in stats section)
   LeetCode: "https://cdn.simpleicons.org/leetcode/FFA116",
   Algorithms: "",
@@ -37006,18 +37196,28 @@ const techIconMap = {
 };
 const projects = [
   {
-    title: "Real Time Collaborative Code Editor",
-    description: "A real-time collaborative code editor supporting multi-user simultaneous editing, live code execution, and Docker-based deployment on AWS ECS. Features conflict-free sync using Yjs CRDT, Monaco Editor for rich code editing experience, and Socket.io for real-time communication.",
-    longDescription: "Built a production-grade collaborative code editor where multiple developers can code together simultaneously. Uses Yjs CRDT for conflict-free real-time document sync, Monaco Editor (same as VS Code) for a rich coding experience, and Socket.io for WebSocket communication. Containerized with Docker and deployed on AWS ECS for scalability.",
+    title: "Agent Trust Lab",
+    description: "A multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting, so over-limit requests and forged tokens are blocked regardless of what the AI agent decided. A real LLM (Groq) is treated as an untrusted decision-maker.",
+    longDescription: "Built a multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting. A real LLM (Groq, OpenAI-compatible API) is integrated as an untrusted decision-maker: its JSON output is validated and fails closed when invalid, and responses are recorded by request hash so an unchanged replay makes zero model calls. Every step is logged in a hash-chained, tamper-evident event log with sandboxed replay to test which input caused an outcome. Covered by 86 automated tests and deployed as a FastAPI + SQLite service with a live dashboard.",
+    image: `${"/anubhav-portfolio/"}assets/agent-trust-lab.png`,
+    tags: ["Python", "FastAPI", "SQLite", "JavaScript", "Vercel"],
+    liveUrl: "https://agent-trust-lab.vercel.app/",
+    codeUrl: "https://github.com/anubhav1450/agent-trust-lab",
+    featured: true
+  },
+  {
+    title: "Real Time Collaborative Editor",
+    description: "A real-time collaborative code editor built with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Room-based sessions with live presence, verified with 20 concurrent browser sessions.",
+    longDescription: "Built a real-time collaborative code editor with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Added room-based sessions with live presence: shareable room codes and invite links, an active-users panel, colored remote cursors with name tags, and a language setting synced across the room. Verified sync and presence with a Playwright test running 20 concurrent browser sessions in one room; containerized with Docker (multi-stage build, health checks) and deployed on Vercel and Render.",
     image: `${"/anubhav-portfolio/"}assets/RTE3.png`,
     tags: [
-      "React",
+      "React.js",
       "Node.js",
-      "Express",
+      "Express.js",
       "WebSockets",
-      "Tailwind CSS",
+      "TailwindCSS",
       "Docker",
-      "AWS"
+      "Playwright"
     ],
     liveUrl: null,
     codeUrl: "https://github.com/anubhav1450/real-time-editor",
@@ -37025,30 +37225,12 @@ const projects = [
   },
   {
     title: "Hacker News Scraper",
-    description: "A full-stack web application that scrapes Hacker News for the latest stories, with user authentication, bookmarking, and advanced search. Built with a Node.js backend using Cheerio for scraping and a React frontend.",
-    longDescription: "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
+    description: "A full-stack web application that scrapes Hacker News for the latest stories, with JWT user authentication, bookmarking and search. Node.js backend with a React frontend, backed by MongoDB.",
+    longDescription: "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management and search. The Node.js/Express backend scrapes stories and stores them in MongoDB; the React frontend is a clean SPA with filtering.",
     image: `${"/anubhav-portfolio/"}assets/hackerNews.png`,
-    tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
+    tags: ["Node.js", "Express.js", "React.js", "MongoDB", "REST APIs"],
     liveUrl: "https://hacker-news-scraper-amgo.onrender.com/",
     codeUrl: "https://github.com/anubhav1450/Hacker-News-Scraper",
-    featured: true
-  },
-  {
-    title: "URL Shortener",
-    description: "A full-stack URL Shortener application with analytics tracking, click monitoring, and responsive dashboard interface. Users can generate short URLs, manage links, and track engagement statistics in real time.",
-    longDescription: "Built a production-ready URL Shortener using React, Node.js, Express, and MongoDB. Features include URL shortening, analytics tracking, click history, link management, and responsive dashboard UI. Backend follows REST API architecture with MongoDB integration using Mongoose.",
-    image: `${"/anubhav-portfolio/"}assets/URL-short.png`,
-    tags: [
-      "React",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Mongoose",
-      "Tailwind CSS",
-      "REST APIs"
-    ],
-    liveUrl: "https://urlsht-job9.onrender.com",
-    codeUrl: "https://github.com/anubhav1450/URL-shortner",
     featured: true
   }
 ];
@@ -37273,7 +37455,7 @@ function Projects() {
                           }
                         ),
                         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "relative z-10 text-2xl", children: "🚀" }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "relative z-10", children: "Want to see more?" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "relative z-10", children: "More projects on GitHub" }),
                         /* @__PURE__ */ jsxRuntimeExports.jsx(
                           "span",
                           {
@@ -37427,7 +37609,7 @@ function RealResumeOverlay({
                           {
                             className: "text-lg font-semibold mb-3",
                             style: { color: "oklch(0.7 0.2 280)" },
-                            children: "Software Engineer — Fresher"
+                            children: "Backend-Focused Software Engineer"
                           }
                         ),
                         /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -37522,7 +37704,7 @@ function RealResumeOverlay({
                   {
                     className: "text-sm leading-relaxed",
                     style: { color: "oklch(0.72 0.04 260)" },
-                    children: "Final-year CSE undergraduate with hands-on experience in Java and JavaScript (MERN stack). Proficient in backend development, REST APIs, and DevOps practices including containerization using Docker. Experienced in building scalable full-stack applications with a focus on performance."
+                    children: "Backend-focused software engineer (B.Tech CSE, 2026) with internship experience building REST APIs, authentication and database-backed workflows in Node.js. Built a real-time collaborative editor on Yjs CRDTs and a Python system that puts an LLM behind signed-token authorization, backed by 86 automated tests. Top 7.63% on LeetCode with an 1817 peak contest rating."
                   }
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(ResumeSection, { title: "Education", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start flex-wrap gap-2", children: [
@@ -37540,7 +37722,7 @@ function RealResumeOverlay({
                       {
                         className: "text-sm mt-0.5",
                         style: { color: "oklch(0.65 0.06 260)" },
-                        children: "Government Engineering College Bharatpur, Rajasthan, India"
+                        children: "Government Engineering College Bharatpur, India"
                       }
                     ),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37548,7 +37730,7 @@ function RealResumeOverlay({
                       {
                         className: "text-sm mt-1 font-semibold",
                         style: { color: "oklch(0.7 0.2 280)" },
-                        children: "CGPA: 8.5  ·  8th Semester"
+                        children: "CGPA: 8.65"
                       }
                     )
                   ] }),
@@ -37568,36 +37750,39 @@ function RealResumeOverlay({
                     company: "Lighthouse Info Systems Pvt Ltd",
                     period: "May 2025 – Jul 2025",
                     location: "Nagpur, India",
-                    project: "E-commerce Backend System",
-                    tech: "Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman",
+                    project: "Product, Cart & Order Backend",
+                    tech: "Node.js, Express.js, MongoDB, JWT, RBAC, REST APIs",
                     bullets: [
-                      "Developed a complete E-commerce Backend System using Node.js, Express.js, and MongoDB with 15+ REST APIs.",
-                      "Implemented JWT-based authentication and Role-Based Access Control (RBAC) for secure user management.",
-                      "Designed and optimized MongoDB schemas using Mongoose ODM, improving query performance by 40%.",
-                      "Tested and documented all APIs using Postman, ensuring 100% endpoint coverage."
+                      "Built backend modules for product management, cart operations and order processing in Node.js, Express.js and MongoDB, implementing the end-to-end order workflow.",
+                      "Designed REST APIs with JWT authentication and role-based access control (RBAC) over structured MongoDB schemas.",
+                      "Added input validation, structured error handling and API tests across endpoints for consistent behavior."
                     ]
                   }
                 ) }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(ResumeSection, { title: "Technical Skills", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm", children: [
                   {
                     category: "Languages",
-                    items: "Java, JavaScript, SQL"
+                    items: "Python, JavaScript, Java, SQL"
                   },
                   {
-                    category: "Frontend",
-                    items: "React.js, HTML, CSS, Tailwind CSS, Bootstrap"
+                    category: "Software Engineering",
+                    items: "Data Structures & Algorithms, OOP, SDLC, Unit & API Testing, Debugging"
                   },
                   {
                     category: "Backend",
-                    items: "Node.js, Express.js, REST APIs, JWT/RBAC"
+                    items: "Node.js, Express.js, FastAPI, REST APIs, WebSockets, JWT Authentication, RBAC"
                   },
                   {
                     category: "Databases",
-                    items: "MongoDB, MySQL"
+                    items: "MongoDB, MySQL, SQLite"
                   },
                   {
-                    category: "DevOps & Tools",
-                    items: "Docker, Git/GitHub, Postman, AWS (EC2, S3)"
+                    category: "Cloud & Tools",
+                    items: "AWS ECS, Docker, Vercel, Render, Git, Linux, Postman, Playwright, LLM API integration"
+                  },
+                  {
+                    category: "Frontend",
+                    items: "React.js, HTML5, CSS3, TailwindCSS"
                   }
                 ].map((s) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -37622,38 +37807,53 @@ function RealResumeOverlay({
                       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
                         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "oklch(0.65 0.18 280)" }, children: "▸" }),
                         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                          "Solved",
+                          "Top",
                           " ",
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { style: { color: "oklch(0.82 0.16 50)" }, children: "500+ problems" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { style: { color: "oklch(0.82 0.16 50)" }, children: "7.63%" }),
                           " ",
-                          "across LeetCode, CodeChef, and GeeksforGeeks · LeetCode peak rating:",
+                          "on LeetCode with an",
                           " ",
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { style: { color: "oklch(0.82 0.16 50)" }, children: "1637" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { style: { color: "oklch(0.82 0.16 50)" }, children: "1817" }),
+                          " ",
+                          "peak contest rating; solved",
+                          " ",
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { style: { color: "oklch(0.82 0.16 50)" }, children: "600+ DSA problems" }),
+                          " ",
+                          "across LeetCode, CodeChef and GeeksforGeeks"
                         ] })
                       ] }),
                       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
                         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "oklch(0.65 0.18 280)" }, children: "▸" }),
                         /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                          "Coordinator, Python Programming Club — organized coding workshops for ",
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "50+ students" }),
-                          " at GEC Bharatpur"
+                          "Served as Coordinator of the Python Programming Club, organizing technical workshops, coding events and a hackathon for ",
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "50+ students" })
                         ] })
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "oklch(0.65 0.18 280)" }, children: "▸" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Earned NPTEL Data Structures and Algorithms with Java certification (IIT-backed)" })
                       ] })
                     ]
                   }
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(ResumeSection, { title: "Projects", last: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: [
                   {
-                    name: "Real Time Collaborative Code Editor",
-                    desc: "A real-time collaborative code editor with multi-user sync, live code execution, and Docker-based deployment on AWS ECS.",
-                    tech: "React.js · Node.js · Express.js · Socket.io · Yjs · Monaco Editor · Tailwind CSS · Docker · AWS ECS",
-                    link: "https://github.com/anubhav1450"
+                    name: "Agent Trust Lab",
+                    desc: "Multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting, blocking over-limit requests and forged tokens whatever the agent decided. A real LLM (Groq) acts as an untrusted decision-maker whose JSON output is validated and fails closed. Every step is logged in a hash-chained, tamper-evident event log with sandboxed replay; covered by 86 automated tests and deployed as a FastAPI + SQLite service with a live dashboard.",
+                    tech: "Python · FastAPI · SQLite · HMAC/SHA-256 · LLM API (Groq) · JavaScript · Vercel",
+                    link: "https://agent-trust-lab.vercel.app/"
+                  },
+                  {
+                    name: "Real Time Collaborative Editor",
+                    desc: "Real-time collaborative code editor built with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Room-based sessions with live presence (room codes, invite links, active-user panel, colored cursors with name tags, synced language setting). Verified with a Playwright test running 20 concurrent browser sessions in one room; containerized with multi-stage Docker and health checks, deployed on Vercel and Render.",
+                    tech: "React.js · Node.js · Express.js · Socket.io · Yjs · Monaco Editor · Tailwind CSS · Docker · Playwright",
+                    link: "https://github.com/anubhav1450/real-time-editor"
                   },
                   {
                     name: "Hacker News Scraper",
-                    desc: "A full-stack web scraper for Hacker News with authentication, bookmarking, and search features.",
-                    tech: "Node.js · Express.js · React.js · MongoDB · JWT · Cheerio · Axios · REST APIs",
-                    link: "https://github.com/anubhav1450"
+                    desc: "Full-stack scraper for Hacker News with JWT authentication, bookmarking and search, backed by MongoDB.",
+                    tech: "Node.js · Express.js · React.js · MongoDB · JWT · REST APIs",
+                    link: "https://github.com/anubhav1450/Hacker-News-Scraper"
                   }
                 ].map((p) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-baseline gap-2 mb-1 flex-wrap", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -37862,7 +38062,7 @@ function ResumeOverlay({ open, onClose }) {
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-black uppercase tracking-[0.2em] text-gray-900 mb-3 border-l-4 border-gray-900 pl-3", children: "Why You Should Hire Me (You Won't)" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-700 leading-relaxed", children: "Final-year CSE student who builds backends so scalable they could survive a zombie apocalypse. Proficient in Java, JavaScript, Docker, and convincing MongoDB that the schema is totally fine. Has opinions about REST APIs. Strong ones. Solved 500+ coding problems across platforms because apparently I enjoy suffering — voluntarily. Net positive human, would recommend." })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-700 leading-relaxed", children: "Backend-focused software engineer (B.Tech CSE, 2026) who builds APIs so well-authenticated they ask the request for ID twice. Taught an LLM to behave using signed tokens and 86 automated tests, and made a code editor where everyone types at once and nobody fights (CRDTs, not diplomacy). Top 7.63% on LeetCode because apparently I enjoy suffering — voluntarily. Net positive human, would recommend." })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-black uppercase tracking-[0.2em] text-gray-900 mb-4 border-l-4 border-gray-900 pl-3", children: "Experience (The Months I Can't Get Back)" }),
@@ -37876,10 +38076,9 @@ function ResumeOverlay({ open, onClose }) {
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-gray-400 shrink-0 ml-4", children: "May 2025 – Jul 2025" })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "list-none space-y-1.5 text-sm text-gray-700 pl-1", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Built 15+ REST APIs for an e-commerce backend. Nobody told me there'd be math involved." }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: '→ Implemented JWT + RBAC. Turns out "secure" is not a personality trait you can inherit.' }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Improved MongoDB query performance by 40% using Mongoose schemas. Celebrated with chai." }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Achieved 100% Postman endpoint coverage. Postman was very cooperative, unlike some people." })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Built backend modules for product management, cart operations and order processing in Node.js, Express.js and MongoDB, end to end. Nobody told me carts have feelings." }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: '→ Designed REST APIs with JWT authentication and RBAC over structured MongoDB schemas. Turns out "secure" is not a personality trait you can inherit.' }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Added input validation, structured error handling and API tests across endpoints. Celebrated with chai." })
                     ] })
                   ] }) })
                 ] }),
@@ -37889,18 +38088,19 @@ function ResumeOverlay({ open, onClose }) {
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "B.Tech · Computer Science & Engineering" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-400 mx-2", children: "·" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-600", children: "GEC Bharatpur, Rajasthan" })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-600", children: "Government Engineering College Bharatpur" })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-gray-400 shrink-0 ml-4", children: "2022 – 2026" })
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-500 mt-1.5 italic pl-1", children: "CGPA: 8.5 — yes, real. Learned that theory and practice are the same in theory. Still waiting for the theory to kick in." })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-500 mt-1.5 italic pl-1", children: "CGPA: 8.65 — yes, real. Learned that theory and practice are the same in theory. Still waiting for the theory to kick in." })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-black uppercase tracking-[0.2em] text-gray-900 mb-4 border-l-4 border-gray-900 pl-3", children: "Skills (Negotiable)" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2 text-sm text-gray-700", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Java:" }),
-                      " My first language. We have a complicated relationship. I still call it."
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Python:" }),
+                      " ",
+                      "FastAPI, HMAC signatures and one very supervised LLM. Indentation is my love language."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "JavaScript:" }),
@@ -37908,24 +38108,34 @@ function ResumeOverlay({ open, onClose }) {
                       "Yes. Sometimes too much yes. Node.js at the back, React.js at the front, chaos everywhere."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "MongoDB:" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Java & SQL:" }),
                       " ",
-                      "Schema-less by spec, schema-full by anxiety. I use Mongoose. It helps."
+                      "My first language and its strict, well-organised cousin. We have a complicated relationship. I still call."
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "MongoDB, MySQL, SQLite:" }),
+                      " ",
+                      "Schema-less by spec, schema-full by anxiety. Three databases, zero regrets (some regrets)."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Docker:" }),
                       " ",
-                      "It works on my machine™ is now contractually a container. Ship it."
+                      "It works on my machine™ is now contractually a container. Multi-stage, with health checks. Ship it."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "REST APIs:" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "REST APIs & WebSockets:" }),
                       " ",
-                      "15+ built. All documented. All tested. Postman and I are besties."
+                      "JWT, RBAC, validation, tests. Postman and I are besties."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "AWS (EC2, S3):" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "AWS ECS, Vercel, Render:" }),
                       " ",
                       "Deployed to the cloud. The cloud was fine. My sanity was less fine."
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Playwright:" }),
+                      " ",
+                      "Opens 20 browsers at once so I don't have to open 20 tabs of regret."
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-gray-900", children: "Git:" }),
@@ -37939,10 +38149,10 @@ function ResumeOverlay({ open, onClose }) {
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "mb-6", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-black uppercase tracking-[0.2em] text-gray-900 mb-4 border-l-4 border-gray-900 pl-3", children: "Achievements (Peer-Reviewed by Me)" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "space-y-1.5 text-sm text-gray-700", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Solved 500+ problems across LeetCode, CodeChef, and GeeksforGeeks. Still can't reverse a linked list in an interview without sweating." }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ LeetCode peak rating: 1637. Not 1638. 1637. I don't want to talk about it." }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Built a Real-Time Collaborative Code Editor — because apparently Stack Overflow isn't collaborative enough." }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Coordinator of Python Programming Club: organized workshops for 50+ students. They learned Python. I learned patience." }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Solved 600+ DSA problems across LeetCode, CodeChef, and GeeksforGeeks. Still can't reverse a linked list in an interview without sweating." }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Top 7.63% on LeetCode, peak contest rating 1817. Not 1818. 1817. I don't want to talk about it." }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Coordinator of the Python Programming Club: ran workshops, coding events and a hackathon for 50+ students. They learned Python. I learned patience." }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ NPTEL Data Structures and Algorithms with Java certification (IIT-backed). Yes, I have a certificate for this." }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "→ Read the documentation once. Twice felt like cheating." })
                   ] })
                 ] }),
@@ -37950,13 +38160,18 @@ function ResumeOverlay({ open, onClose }) {
                   /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-black uppercase tracking-[0.2em] text-gray-900 mb-4 border-l-4 border-gray-900 pl-3", children: "Projects (Things I Actually Built)" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4 text-sm text-gray-700", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-gray-900", children: "Real Time Collaborative Code Editor" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mb-1", children: "React.js · Node.js · Socket.io · Yjs · Monaco Editor · Docker · AWS ECS" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Multi-user real-time code editor with live execution, deployed on AWS ECS. Built because pair programming over Zoom calls was causing everyone emotional damage." })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-gray-900", children: "Agent Trust Lab" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mb-1", children: "Python · FastAPI · SQLite · HMAC/SHA-256 · LLM API (Groq) · JavaScript · Vercel" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: 'Multi-agent refund workflow where an LLM is the untrusted one and signed, limit-bound tokens do the trusting. Tamper-evident hash-chained log, sandboxed replay, 86 tests. Built because "the AI said it was fine" is not a security model.' })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-gray-900", children: "Real Time Collaborative Editor" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mb-1", children: "React.js · Node.js · Socket.io · Yjs · Monaco Editor · Docker · Playwright" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Multi-user code editor on Yjs CRDTs with room codes, live cursors and presence, verified with 20 concurrent browser sessions. Built because pair programming over Zoom calls was causing everyone emotional damage." })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-gray-900", children: "Hacker News Scraper" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mb-1", children: "Node.js · Express.js · React.js · MongoDB · JWT · Cheerio · Axios" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-500 mb-1", children: "Node.js · Express.js · React.js · MongoDB · JWT · REST APIs" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Full-stack scraper with auth, bookmarking, and search. Because Hacker News's own search was too easy to use." })
                     ] })
                   ] })
@@ -37974,9 +38189,20 @@ function ResumeOverlay({ open, onClose }) {
 }
 const skillCategories = [
   {
-    title: "Programming Languages",
+    title: "Languages",
     emoji: "⌨️",
-    items: ["Java", "JavaScript", "Python", "SQL"]
+    items: ["Python", "JavaScript", "Java", "SQL"]
+  },
+  {
+    title: "Software Engineering",
+    emoji: "🏗️",
+    items: [
+      "Data Structures & Algorithms",
+      "OOP",
+      "SDLC",
+      "Unit & API Testing",
+      "Debugging"
+    ]
   },
   {
     title: "Backend",
@@ -37984,36 +38210,54 @@ const skillCategories = [
     items: [
       "Node.js",
       "Express.js",
-      "MongoDB",
-      "MySQL",
+      "FastAPI",
       "REST APIs",
-      "JWT/RBAC"
+      "WebSockets",
+      "JWT Authentication",
+      "RBAC"
+    ]
+  },
+  {
+    title: "Databases",
+    emoji: "🗄️",
+    items: ["MongoDB", "MySQL", "SQLite"]
+  },
+  {
+    title: "Cloud & Tools",
+    emoji: "🛠️",
+    items: [
+      "AWS ECS",
+      "Docker",
+      "Vercel",
+      "Render",
+      "Git",
+      "Linux",
+      "Postman",
+      "Playwright",
+      "LLM API integration"
     ]
   },
   {
     title: "Frontend",
     emoji: "🖥️",
-    items: ["HTML", "CSS", "Tailwind CSS", "Bootstrap", "React.js", "Vite"]
-  },
-  {
-    title: "Databases & DevOps",
-    emoji: "🛠️",
-    items: ["Docker", "Git/GitHub", "Postman", "AWS"]
+    items: ["React.js", "HTML5", "CSS3", "TailwindCSS"]
   }
 ];
 const emojiMap = {
   Algorithms: "📐",
   "Data Structures": "🌳",
-  "System Design": "🏗️"
-};
-const FALLBACK = {
-  totalSolved: 474,
-  easySolved: 263,
-  mediumSolved: 190,
-  hardSolved: 21,
-  acceptanceRate: 68.7,
-  ranking: 212171,
-  totalQuestions: 3930
+  "System Design": "🏗️",
+  "Data Structures & Algorithms": "🌳",
+  OOP: "🧩",
+  SDLC: "🔄",
+  "Unit & API Testing": "🧪",
+  Debugging: "🐞",
+  "REST APIs": "🔌",
+  WebSockets: "⚡",
+  "JWT Authentication": "🔐",
+  RBAC: "🛡️",
+  Render: "☁️",
+  "LLM API integration": "🤖"
 };
 function useCountUp(target, active, duration = 1500) {
   const [value, setValue] = reactExports.useState(0);
@@ -38107,30 +38351,20 @@ function TechBadge({ name }) {
   );
 }
 function LeetCodeSection() {
-  const [stats, setStats] = reactExports.useState(null);
-  const [loading, setLoading] = reactExports.useState(true);
   const ref = reactExports.useRef(null);
   const inView2 = useInView(ref, { once: true, margin: "-100px" });
-  reactExports.useEffect(() => {
-    fetch("https://leetcode-api-faisalshohag.vercel.app/Anubhav9457").then((r2) => r2.json()).then((data) => {
-      setStats({
-        totalSolved: data.totalSolved ?? FALLBACK.totalSolved,
-        easySolved: data.easySolved ?? FALLBACK.easySolved,
-        mediumSolved: data.mediumSolved ?? FALLBACK.mediumSolved,
-        hardSolved: data.hardSolved ?? FALLBACK.hardSolved,
-        acceptanceRate: data.acceptanceRate ?? FALLBACK.acceptanceRate,
-        ranking: data.ranking ?? FALLBACK.ranking,
-        totalQuestions: data.totalQuestions ?? FALLBACK.totalQuestions
-      });
-    }).catch(() => setStats(FALLBACK)).finally(() => setLoading(false));
-  }, []);
-  const active = inView2 && !loading;
-  const s = stats ?? FALLBACK;
+  const { stats: s, source, updatedAt, loading } = useLeetCodeStats();
+  const active = inView2;
   const totalCount = useCountUp(s.totalSolved, active);
   const easyCount = useCountUp(s.easySolved, active);
   const mediumCount = useCountUp(s.mediumSolved, active);
   const hardCount = useCountUp(s.hardSolved, active);
   const rankCount = useCountUp(s.ranking, active, 2e3);
+  const ratingCount = useCountUp(s.contestRating ?? 0, active);
+  const updatedLabel = updatedAt ? new Date(updatedAt).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  }) : null;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     motion.div,
     {
@@ -38173,51 +38407,7 @@ function LeetCodeSection() {
                   }
                 }
               ),
-              loading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "div",
-                {
-                  className: "flex flex-col gap-4",
-                  "data-ocid": "skills.leetcode.loading_state",
-                  children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "div",
-                        {
-                          className: "w-16 h-16 rounded-xl animate-pulse",
-                          style: { background: "oklch(0.22 0.03 40 / 0.6)" }
-                        }
-                      ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          "div",
-                          {
-                            className: "w-36 h-5 rounded animate-pulse",
-                            style: { background: "oklch(0.22 0.03 40 / 0.6)" }
-                          }
-                        ),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          "div",
-                          {
-                            className: "w-24 h-3 rounded animate-pulse",
-                            style: { background: "oklch(0.22 0.03 40 / 0.4)" }
-                          }
-                        )
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-3", children: [1, 2, 3, 4].map((i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "div",
-                      {
-                        className: "h-24 rounded-xl animate-pulse",
-                        style: {
-                          background: "oklch(0.22 0.03 40 / 0.4)",
-                          animationDelay: `${i * 0.1}s`
-                        }
-                      },
-                      i
-                    )) })
-                  ]
-                }
-              ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative z-10", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row md:items-center gap-6 mb-8", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 flex-1", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -38247,7 +38437,41 @@ function LeetCodeSection() {
                           children: "LeetCode"
                         }
                       ),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-black text-foreground", children: "Anubhav9457" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-black text-foreground", children: LEETCODE_USERNAME }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                        "p",
+                        {
+                          className: "mt-1 text-xs font-semibold flex items-center gap-1.5",
+                          style: {
+                            color: source === "live" ? "#2db55d" : "oklch(0.7 0.05 255)"
+                          },
+                          "data-ocid": "skills.leetcode.status",
+                          children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                              "span",
+                              {
+                                className: `inline-block w-2 h-2 rounded-full ${source === "live" ? "animate-pulse" : ""}`,
+                                style: {
+                                  background: source === "live" ? "#2db55d" : "oklch(0.6 0.05 255)"
+                                }
+                              }
+                            ),
+                            source === "live" ? `Live · updated ${updatedLabel}` : loading ? "Connecting to LeetCode…" : source === "cached" ? `Cached · last synced ${updatedLabel}` : "Offline snapshot"
+                          ]
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "a",
+                        {
+                          href: LEETCODE_PROFILE_URL,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          className: "inline-flex items-center gap-1.5 mt-2 mr-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105",
+                          style: { background: "#FFA116", color: "#1a1a1a" },
+                          "data-ocid": "skills.leetcode.profile_link",
+                          children: "View on LeetCode ↗"
+                        }
+                      ),
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
                         "a",
                         {
@@ -38255,7 +38479,11 @@ function LeetCodeSection() {
                           target: "_blank",
                           rel: "noopener noreferrer",
                           className: "inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105",
-                          style: { background: "#FFA116", color: "#1a1a1a" },
+                          style: {
+                            background: "transparent",
+                            color: "#FFA116",
+                            border: "1px solid #FFA116"
+                          },
                           "data-ocid": "skills.leetcode.link",
                           children: "View Coding Profile ↗"
                         }
@@ -38381,6 +38609,41 @@ function LeetCodeSection() {
                               ]
                             }
                           )
+                        ] })
+                      ]
+                    }
+                  ),
+                  s.contestRating !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
+                    {
+                      className: "flex items-center gap-3 px-4 py-3 rounded-xl flex-1 min-w-[160px]",
+                      style: {
+                        background: "oklch(0.18 0.05 60 / 0.5)",
+                        border: "1px solid oklch(0.45 0.1 60 / 0.35)"
+                      },
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-2xl", children: "⚡" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground font-medium", children: "Contest Rating" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                            "p",
+                            {
+                              className: "text-xl font-black",
+                              style: { color: "#FFA116" },
+                              children: [
+                                ratingCount,
+                                s.contestTopPercentage !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-2 text-sm font-semibold text-muted-foreground", children: [
+                                  "Top ",
+                                  s.contestTopPercentage,
+                                  "%"
+                                ] })
+                              ]
+                            }
+                          ),
+                          s.contestsAttended !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground", children: [
+                            s.contestsAttended,
+                            " contests"
+                          ] })
                         ] })
                       ]
                     }
