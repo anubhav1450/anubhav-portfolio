@@ -91,11 +91,11 @@ export default function RealResumeOverlay({
                       border: "none",
                     }}
                     onClick={() =>
-                    window.open(
-                      `${import.meta.env.BASE_URL}assets/Anubhav_Kulshreshtha_Resume.pdf`,
-                      "_blank"
-                    )
-                  }
+                      window.open(
+                        `${import.meta.env.BASE_URL}assets/Anubhav_Kulshreshtha_Resume.pdf`,
+                        "_blank",
+                      )
+                    }
                     data-ocid="real_resume.print_button"
                   >
                     <Download className="w-4 h-4" />
@@ -143,7 +143,7 @@ export default function RealResumeOverlay({
                         className="text-lg font-semibold mb-3"
                         style={{ color: "oklch(0.7 0.2 280)" }}
                       >
-                        Software Engineer — Fresher
+                        Backend-Focused Software Engineer
                       </p>
                       <div
                         className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm"
@@ -214,12 +214,13 @@ export default function RealResumeOverlay({
                     className="text-sm leading-relaxed"
                     style={{ color: "oklch(0.72 0.04 260)" }}
                   >
-                    Final-year CSE undergraduate with hands-on experience in
-                    Java and JavaScript (MERN stack). Proficient in backend
-                    development, REST APIs, and DevOps practices including
-                    containerization using Docker. Experienced in building
-                    scalable full-stack applications with a focus on
-                    performance.
+                    Backend-focused software engineer (B.Tech CSE, 2026) with
+                    internship experience building REST APIs, authentication and
+                    database-backed workflows in Node.js. Built a real-time
+                    collaborative editor on Yjs CRDTs and a Python system that
+                    puts an LLM behind signed-token authorization, backed by 86
+                    automated tests. Top 7.63% on LeetCode with an 1817 peak
+                    contest rating.
                   </p>
                 </ResumeSection>
 
@@ -236,14 +237,13 @@ export default function RealResumeOverlay({
                         className="text-sm mt-0.5"
                         style={{ color: "oklch(0.65 0.06 260)" }}
                       >
-                        Government Engineering College Bharatpur, Rajasthan,
-                        India
+                        Government Engineering College Bharatpur, India
                       </p>
                       <p
                         className="text-sm mt-1 font-semibold"
                         style={{ color: "oklch(0.7 0.2 280)" }}
                       >
-                        CGPA: 8.5 &nbsp;·&nbsp; 8th Semester
+                        CGPA: 8.65
                       </p>
                     </div>
                     <span
@@ -262,13 +262,12 @@ export default function RealResumeOverlay({
                       company="Lighthouse Info Systems Pvt Ltd"
                       period="May 2025 – Jul 2025"
                       location="Nagpur, India"
-                      project="E-commerce Backend System"
-                      tech="Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman"
+                      project="Product, Cart & Order Backend"
+                      tech="Node.js, Express.js, MongoDB, JWT, RBAC, REST APIs"
                       bullets={[
-                        "Developed a complete E-commerce Backend System using Node.js, Express.js, and MongoDB with 15+ REST APIs.",
-                        "Implemented JWT-based authentication and Role-Based Access Control (RBAC) for secure user management.",
-                        "Designed and optimized MongoDB schemas using Mongoose ODM, improving query performance by 40%.",
-                        "Tested and documented all APIs using Postman, ensuring 100% endpoint coverage.",
+                        "Built backend modules for product management, cart operations and order processing in Node.js, Express.js and MongoDB, implementing the end-to-end order workflow.",
+                        "Designed REST APIs with JWT authentication and role-based access control (RBAC) over structured MongoDB schemas.",
+                        "Added input validation, structured error handling and API tests across endpoints for consistent behavior.",
                       ]}
                     />
                   </div>
@@ -279,23 +278,30 @@ export default function RealResumeOverlay({
                     {[
                       {
                         category: "Languages",
-                        items: "Java, JavaScript, SQL",
+                        items: "Python, JavaScript, Java, SQL",
                       },
                       {
-                        category: "Frontend",
-                        items: "React.js, HTML, CSS, Tailwind CSS, Bootstrap",
+                        category: "Software Engineering",
+                        items:
+                          "Data Structures & Algorithms, OOP, SDLC, Unit & API Testing, Debugging",
                       },
                       {
                         category: "Backend",
-                        items: "Node.js, Express.js, REST APIs, JWT/RBAC",
+                        items:
+                          "Node.js, Express.js, FastAPI, REST APIs, WebSockets, JWT Authentication, RBAC",
                       },
                       {
                         category: "Databases",
-                        items: "MongoDB, MySQL",
+                        items: "MongoDB, MySQL, SQLite",
                       },
                       {
-                        category: "DevOps & Tools",
-                        items: "Docker, Git/GitHub, Postman, AWS (EC2, S3)",
+                        category: "Cloud & Tools",
+                        items:
+                          "AWS ECS, Docker, Vercel, Render, Git, Linux, Postman, Playwright, LLM API integration",
+                      },
+                      {
+                        category: "Frontend",
+                        items: "React.js, HTML5, CSS3, TailwindCSS",
                       },
                     ].map((s) => (
                       <div key={s.category} className="flex gap-2">
@@ -321,23 +327,34 @@ export default function RealResumeOverlay({
                     <div className="flex gap-2">
                       <span style={{ color: "oklch(0.65 0.18 280)" }}>▸</span>
                       <span>
-                        Solved{" "}
+                        Top{" "}
                         <strong style={{ color: "oklch(0.82 0.16 50)" }}>
-                          500+ problems
+                          7.63%
                         </strong>{" "}
-                        across LeetCode, CodeChef, and GeeksforGeeks · LeetCode
-                        peak rating:{" "}
+                        on LeetCode with an{" "}
                         <strong style={{ color: "oklch(0.82 0.16 50)" }}>
-                          1637
-                        </strong>
+                          1817
+                        </strong>{" "}
+                        peak contest rating; solved{" "}
+                        <strong style={{ color: "oklch(0.82 0.16 50)" }}>
+                          600+ DSA problems
+                        </strong>{" "}
+                        across LeetCode, CodeChef and GeeksforGeeks
                       </span>
                     </div>
                     <div className="flex gap-2">
                       <span style={{ color: "oklch(0.65 0.18 280)" }}>▸</span>
                       <span>
-                        Coordinator, Python Programming Club — organized coding
-                        workshops for <strong>50+ students</strong> at GEC
-                        Bharatpur
+                        Served as Coordinator of the Python Programming Club,
+                        organizing technical workshops, coding events and a
+                        hackathon for <strong>50+ students</strong>
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span style={{ color: "oklch(0.65 0.18 280)" }}>▸</span>
+                      <span>
+                        Earned NPTEL Data Structures and Algorithms with Java
+                        certification (IIT-backed)
                       </span>
                     </div>
                   </div>
@@ -347,16 +364,22 @@ export default function RealResumeOverlay({
                   <div className="space-y-4">
                     {[
                       {
-                        name: "Real Time Collaborative Code Editor",
-                        desc: "A real-time collaborative code editor with multi-user sync, live code execution, and Docker-based deployment on AWS ECS.",
-                        tech: "React.js · Node.js · Express.js · Socket.io · Yjs · Monaco Editor · Tailwind CSS · Docker · AWS ECS",
-                        link: "https://github.com/anubhav1450",
+                        name: "Agent Trust Lab",
+                        desc: "Multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting, blocking over-limit requests and forged tokens whatever the agent decided. A real LLM (Groq) acts as an untrusted decision-maker whose JSON output is validated and fails closed. Every step is logged in a hash-chained, tamper-evident event log with sandboxed replay; covered by 86 automated tests and deployed as a FastAPI + SQLite service with a live dashboard.",
+                        tech: "Python · FastAPI · SQLite · HMAC/SHA-256 · LLM API (Groq) · JavaScript · Vercel",
+                        link: "https://agent-trust-lab.vercel.app/",
+                      },
+                      {
+                        name: "Real Time Collaborative Editor",
+                        desc: "Real-time collaborative code editor built with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Room-based sessions with live presence (room codes, invite links, active-user panel, colored cursors with name tags, synced language setting). Verified with a Playwright test running 20 concurrent browser sessions in one room; containerized with multi-stage Docker and health checks, deployed on Vercel and Render.",
+                        tech: "React.js · Node.js · Express.js · Socket.io · Yjs · Monaco Editor · Tailwind CSS · Docker · Playwright",
+                        link: "https://github.com/anubhav1450/real-time-editor",
                       },
                       {
                         name: "Hacker News Scraper",
-                        desc: "A full-stack web scraper for Hacker News with authentication, bookmarking, and search features.",
-                        tech: "Node.js · Express.js · React.js · MongoDB · JWT · Cheerio · Axios · REST APIs",
-                        link: "https://github.com/anubhav1450",
+                        desc: "Full-stack scraper for Hacker News with JWT authentication, bookmarking and search, backed by MongoDB.",
+                        tech: "Node.js · Express.js · React.js · MongoDB · JWT · REST APIs",
+                        link: "https://github.com/anubhav1450/Hacker-News-Scraper",
                       },
                     ].map((p) => (
                       <div key={p.name}>

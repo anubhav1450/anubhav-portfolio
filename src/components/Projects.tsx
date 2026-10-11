@@ -13,20 +13,32 @@ import { techIconMap } from "./techIconMap";
 
 const projects = [
   {
-    title: "Real Time Collaborative Code Editor",
+    title: "Agent Trust Lab",
     description:
-      "A real-time collaborative code editor supporting multi-user simultaneous editing, live code execution, and Docker-based deployment on AWS ECS. Features conflict-free sync using Yjs CRDT, Monaco Editor for rich code editing experience, and Socket.io for real-time communication.",
+      "A multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting, so over-limit requests and forged tokens are blocked regardless of what the AI agent decided. A real LLM (Groq) is treated as an untrusted decision-maker.",
     longDescription:
-      "Built a production-grade collaborative code editor where multiple developers can code together simultaneously. Uses Yjs CRDT for conflict-free real-time document sync, Monaco Editor (same as VS Code) for a rich coding experience, and Socket.io for WebSocket communication. Containerized with Docker and deployed on AWS ECS for scalability.",
+      "Built a multi-agent refund workflow in Python where the Payment API verifies HMAC-signed, limit-bound delegation tokens before acting. A real LLM (Groq, OpenAI-compatible API) is integrated as an untrusted decision-maker: its JSON output is validated and fails closed when invalid, and responses are recorded by request hash so an unchanged replay makes zero model calls. Every step is logged in a hash-chained, tamper-evident event log with sandboxed replay to test which input caused an outcome. Covered by 86 automated tests and deployed as a FastAPI + SQLite service with a live dashboard.",
+    image: `${import.meta.env.BASE_URL}assets/agent-trust-lab.png`,
+    tags: ["Python", "FastAPI", "SQLite", "JavaScript", "Vercel"],
+    liveUrl: "https://agent-trust-lab.vercel.app/",
+    codeUrl: "https://github.com/anubhav1450/agent-trust-lab",
+    featured: true,
+  },
+  {
+    title: "Real Time Collaborative Editor",
+    description:
+      "A real-time collaborative code editor built with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Room-based sessions with live presence, verified with 20 concurrent browser sessions.",
+    longDescription:
+      "Built a real-time collaborative code editor with React, Monaco Editor and Yjs CRDTs synced over Socket.io on a Node.js server, so simultaneous edits from many users merge without conflicts. Added room-based sessions with live presence: shareable room codes and invite links, an active-users panel, colored remote cursors with name tags, and a language setting synced across the room. Verified sync and presence with a Playwright test running 20 concurrent browser sessions in one room; containerized with Docker (multi-stage build, health checks) and deployed on Vercel and Render.",
     image: `${import.meta.env.BASE_URL}assets/RTE3.png`,
     tags: [
-      "React",
+      "React.js",
       "Node.js",
-      "Express",
+      "Express.js",
       "WebSockets",
-      "Tailwind CSS",
+      "TailwindCSS",
       "Docker",
-      "AWS",
+      "Playwright",
     ],
     liveUrl: null,
     codeUrl: "https://github.com/anubhav1450/real-time-editor",
@@ -35,35 +47,15 @@ const projects = [
   {
     title: "Hacker News Scraper",
     description:
-      "A full-stack web application that scrapes Hacker News for the latest stories, with user authentication, bookmarking, and advanced search. Built with a Node.js backend using Cheerio for scraping and a React frontend.",
+      "A full-stack web application that scrapes Hacker News for the latest stories, with JWT user authentication, bookmarking and search. Node.js backend with a React frontend, backed by MongoDB.",
     longDescription:
-      "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management, and full-text search. Backend uses Cheerio and Axios for efficient scraping with rate limiting. Frontend is a clean React SPA with real-time filtering. Stores scraped data in MongoDB with Mongoose schemas.",
+      "Developed a full-stack web scraper for Hacker News featuring JWT-based authentication, bookmark management and search. The Node.js/Express backend scrapes stories and stores them in MongoDB; the React frontend is a clean SPA with filtering.",
     image: `${import.meta.env.BASE_URL}assets/hackerNews.png`,
-    tags: ["Node.js", "Express", "React", "MongoDB", "JWT", "REST APIs"],
+    tags: ["Node.js", "Express.js", "React.js", "MongoDB", "REST APIs"],
     liveUrl: "https://hacker-news-scraper-amgo.onrender.com/",
     codeUrl: "https://github.com/anubhav1450/Hacker-News-Scraper",
     featured: true,
   },
-  {
-  title: "URL Shortener",
-  description:
-    "A full-stack URL Shortener application with analytics tracking, click monitoring, and responsive dashboard interface. Users can generate short URLs, manage links, and track engagement statistics in real time.",
-  longDescription:
-    "Built a production-ready URL Shortener using React, Node.js, Express, and MongoDB. Features include URL shortening, analytics tracking, click history, link management, and responsive dashboard UI. Backend follows REST API architecture with MongoDB integration using Mongoose.",
-  image: `${import.meta.env.BASE_URL}assets/URL-short.png`,
-  tags: [
-    "React",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "Mongoose",
-    "Tailwind CSS",
-    "REST APIs",
-  ],
-  liveUrl: "https://urlsht-job9.onrender.com",
-  codeUrl: "https://github.com/anubhav1450/URL-shortner",
-  featured: true,
-},
 ];
 
 function TagPill({ tag }: { tag: string }) {
@@ -307,7 +299,7 @@ export default function Projects() {
               }}
             />
             <span className="relative z-10 text-2xl">🚀</span>
-            <span className="relative z-10">Want to see more?</span>
+            <span className="relative z-10">More projects on GitHub</span>
             <span
               className="relative z-10 text-sm font-normal opacity-70 group-hover:opacity-100 transition-opacity"
               style={{ color: "oklch(0.65 0.14 230)" }}

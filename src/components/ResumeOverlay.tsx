@@ -117,13 +117,13 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                     Why You Should Hire Me (You Won&apos;t)
                   </h2>
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Final-year CSE student who builds backends so scalable they
-                    could survive a zombie apocalypse. Proficient in Java,
-                    JavaScript, Docker, and convincing MongoDB that the schema
-                    is totally fine. Has opinions about REST APIs. Strong ones.
-                    Solved 500+ coding problems across platforms because
-                    apparently I enjoy suffering — voluntarily. Net positive
-                    human, would recommend.
+                    Backend-focused software engineer (B.Tech CSE, 2026) who
+                    builds APIs so well-authenticated they ask the request for
+                    ID twice. Taught an LLM to behave using signed tokens and 86
+                    automated tests, and made a code editor where everyone types
+                    at once and nobody fights (CRDTs, not diplomacy). Top 7.63%
+                    on LeetCode because apparently I enjoy suffering —
+                    voluntarily. Net positive human, would recommend.
                   </p>
                 </section>
 
@@ -150,20 +150,20 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                       </div>
                       <ul className="list-none space-y-1.5 text-sm text-gray-700 pl-1">
                         <li>
-                          → Built 15+ REST APIs for an e-commerce backend.
-                          Nobody told me there&apos;d be math involved.
+                          → Built backend modules for product management, cart
+                          operations and order processing in Node.js, Express.js
+                          and MongoDB, end to end. Nobody told me carts have
+                          feelings.
                         </li>
                         <li>
-                          → Implemented JWT + RBAC. Turns out &quot;secure&quot;
-                          is not a personality trait you can inherit.
+                          → Designed REST APIs with JWT authentication and RBAC
+                          over structured MongoDB schemas. Turns out
+                          &quot;secure&quot; is not a personality trait you can
+                          inherit.
                         </li>
                         <li>
-                          → Improved MongoDB query performance by 40% using
-                          Mongoose schemas. Celebrated with chai.
-                        </li>
-                        <li>
-                          → Achieved 100% Postman endpoint coverage. Postman was
-                          very cooperative, unlike some people.
+                          → Added input validation, structured error handling
+                          and API tests across endpoints. Celebrated with chai.
                         </li>
                       </ul>
                     </div>
@@ -182,7 +182,7 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                       </span>
                       <span className="text-gray-400 mx-2">·</span>
                       <span className="text-gray-600">
-                        GEC Bharatpur, Rajasthan
+                        Government Engineering College Bharatpur
                       </span>
                     </div>
                     <span className="text-xs text-gray-400 shrink-0 ml-4">
@@ -190,7 +190,7 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                     </span>
                   </div>
                   <p className="text-sm text-gray-500 mt-1.5 italic pl-1">
-                    CGPA: 8.5 — yes, real. Learned that theory and practice are
+                    CGPA: 8.65 — yes, real. Learned that theory and practice are
                     the same in theory. Still waiting for the theory to kick in.
                   </p>
                 </section>
@@ -202,9 +202,9 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                   </h2>
                   <div className="space-y-2 text-sm text-gray-700">
                     <p>
-                      <span className="font-bold text-gray-900">Java:</span> My
-                      first language. We have a complicated relationship. I
-                      still call it.
+                      <span className="font-bold text-gray-900">Python:</span>{" "}
+                      FastAPI, HMAC signatures and one very supervised LLM.
+                      Indentation is my love language.
                     </p>
                     <p>
                       <span className="font-bold text-gray-900">
@@ -214,28 +214,43 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                       at the front, chaos everywhere.
                     </p>
                     <p>
-                      <span className="font-bold text-gray-900">MongoDB:</span>{" "}
-                      Schema-less by spec, schema-full by anxiety. I use
-                      Mongoose. It helps.
+                      <span className="font-bold text-gray-900">
+                        Java &amp; SQL:
+                      </span>{" "}
+                      My first language and its strict, well-organised cousin.
+                      We have a complicated relationship. I still call.
+                    </p>
+                    <p>
+                      <span className="font-bold text-gray-900">
+                        MongoDB, MySQL, SQLite:
+                      </span>{" "}
+                      Schema-less by spec, schema-full by anxiety. Three
+                      databases, zero regrets (some regrets).
                     </p>
                     <p>
                       <span className="font-bold text-gray-900">Docker:</span>{" "}
                       It works on my machine™ is now contractually a container.
-                      Ship it.
+                      Multi-stage, with health checks. Ship it.
                     </p>
                     <p>
                       <span className="font-bold text-gray-900">
-                        REST APIs:
+                        REST APIs &amp; WebSockets:
                       </span>{" "}
-                      15+ built. All documented. All tested. Postman and I are
-                      besties.
+                      JWT, RBAC, validation, tests. Postman and I are besties.
                     </p>
                     <p>
                       <span className="font-bold text-gray-900">
-                        AWS (EC2, S3):
+                        AWS ECS, Vercel, Render:
                       </span>{" "}
                       Deployed to the cloud. The cloud was fine. My sanity was
                       less fine.
+                    </p>
+                    <p>
+                      <span className="font-bold text-gray-900">
+                        Playwright:
+                      </span>{" "}
+                      Opens 20 browsers at once so I don&apos;t have to open 20
+                      tabs of regret.
                     </p>
                     <p>
                       <span className="font-bold text-gray-900">Git:</span>{" "}
@@ -254,22 +269,23 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                   </h2>
                   <ul className="space-y-1.5 text-sm text-gray-700">
                     <li>
-                      → Solved 500+ problems across LeetCode, CodeChef, and
+                      → Solved 600+ DSA problems across LeetCode, CodeChef, and
                       GeeksforGeeks. Still can&apos;t reverse a linked list in
                       an interview without sweating.
                     </li>
                     <li>
-                      → LeetCode peak rating: 1637. Not 1638. 1637. I don&apos;t
-                      want to talk about it.
+                      → Top 7.63% on LeetCode, peak contest rating 1817. Not
+                      1818. 1817. I don&apos;t want to talk about it.
                     </li>
                     <li>
-                      → Built a Real-Time Collaborative Code Editor — because
-                      apparently Stack Overflow isn&apos;t collaborative enough.
+                      → Coordinator of the Python Programming Club: ran
+                      workshops, coding events and a hackathon for 50+ students.
+                      They learned Python. I learned patience.
                     </li>
                     <li>
-                      → Coordinator of Python Programming Club: organized
-                      workshops for 50+ students. They learned Python. I learned
-                      patience.
+                      → NPTEL Data Structures and Algorithms with Java
+                      certification (IIT-backed). Yes, I have a certificate for
+                      this.
                     </li>
                     <li>
                       → Read the documentation once. Twice felt like cheating.
@@ -284,16 +300,31 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                   </h2>
                   <div className="space-y-4 text-sm text-gray-700">
                     <div>
+                      <p className="font-bold text-gray-900">Agent Trust Lab</p>
+                      <p className="text-xs text-gray-500 mb-1">
+                        Python · FastAPI · SQLite · HMAC/SHA-256 · LLM API
+                        (Groq) · JavaScript · Vercel
+                      </p>
+                      <p>
+                        Multi-agent refund workflow where an LLM is the
+                        untrusted one and signed, limit-bound tokens do the
+                        trusting. Tamper-evident hash-chained log, sandboxed
+                        replay, 86 tests. Built because &quot;the AI said it was
+                        fine&quot; is not a security model.
+                      </p>
+                    </div>
+                    <div>
                       <p className="font-bold text-gray-900">
-                        Real Time Collaborative Code Editor
+                        Real Time Collaborative Editor
                       </p>
                       <p className="text-xs text-gray-500 mb-1">
                         React.js · Node.js · Socket.io · Yjs · Monaco Editor ·
-                        Docker · AWS ECS
+                        Docker · Playwright
                       </p>
                       <p>
-                        Multi-user real-time code editor with live execution,
-                        deployed on AWS ECS. Built because pair programming over
+                        Multi-user code editor on Yjs CRDTs with room codes,
+                        live cursors and presence, verified with 20 concurrent
+                        browser sessions. Built because pair programming over
                         Zoom calls was causing everyone emotional damage.
                       </p>
                     </div>
@@ -302,8 +333,8 @@ export default function ResumeOverlay({ open, onClose }: ResumeOverlayProps) {
                         Hacker News Scraper
                       </p>
                       <p className="text-xs text-gray-500 mb-1">
-                        Node.js · Express.js · React.js · MongoDB · JWT ·
-                        Cheerio · Axios
+                        Node.js · Express.js · React.js · MongoDB · JWT · REST
+                        APIs
                       </p>
                       <p>
                         Full-stack scraper with auth, bookmarking, and search.

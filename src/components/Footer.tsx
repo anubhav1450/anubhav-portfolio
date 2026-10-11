@@ -15,9 +15,15 @@ const footerLinks = [
   {
     heading: "Projects",
     links: [
-      { label: "Real-Time-Collaborative Editor", href: "#" },
-      { label: "Hacker News Scraper", href: "#" },
-      // { label: "Portfolio CMS", href: "#" },
+      { label: "Agent Trust Lab", href: "https://agent-trust-lab.vercel.app/" },
+      {
+        label: "Real Time Collaborative Editor",
+        href: "https://github.com/anubhav1450/real-time-editor",
+      },
+      {
+        label: "Hacker News Scraper",
+        href: "https://github.com/anubhav1450/Hacker-News-Scraper",
+      },
     ],
   },
 ];
@@ -50,8 +56,8 @@ export default function Footer() {
               Anubhav Kulshreshtha
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed mb-4">
-              Software Engineer on a mission to explore the digital cosmos and
-              build things that matter.
+              Backend-focused software engineer building reliable APIs and
+              real-time systems.
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ Icon, href, label }) => (
@@ -81,6 +87,9 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      {...(link.href.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       data-ocid="footer.link"
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                     >
@@ -98,13 +107,18 @@ export default function Footer() {
               Tech Stack
             </p>
             <ul className="space-y-2">
-              {["Java", "React", "JavaScript", "Node.js", "MongoDB", "Express"].map(
-                (tech) => (
-                  <li key={tech} className="text-muted-foreground text-sm">
-                    {tech}
-                  </li>
-                ),
-              )}
+              {[
+                "Python",
+                "JavaScript",
+                "Node.js",
+                "FastAPI",
+                "MongoDB",
+                "React.js",
+              ].map((tech) => (
+                <li key={tech} className="text-muted-foreground text-sm">
+                  {tech}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -118,7 +132,7 @@ export default function Footer() {
               <span className="text-foreground font-medium">Anubhav</span> ·
               Forged in the stars{" "}
             </span>
-           
+
             <span className="opacity-70"> ✦</span>
           </p>
         </div>

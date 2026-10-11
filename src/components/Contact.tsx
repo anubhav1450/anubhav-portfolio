@@ -353,10 +353,8 @@ export default function Contact() {
               color: "oklch(0.6 0.012 240)",
             }}
           >
-            <span>📍</span>
-            <span>
-              Shikohabad,Uttar Pradesh, India · Actively seeking full-time roles
-            </span>
+            <span>💼</span>
+            <span>Open to full-time software engineering roles</span>
           </div>
         </motion.div>
       </div>

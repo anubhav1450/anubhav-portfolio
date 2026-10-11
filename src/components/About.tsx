@@ -1,19 +1,19 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Briefcase, GraduationCap, MapPin } from "lucide-react";
+import { Briefcase, GraduationCap, Trophy } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import PlanetBackground from "./PlanetBackground";
 
 const pills = [
-  { icon: MapPin, label: "Bharatpur, Rajasthan, India" },
+  { icon: Trophy, label: "LeetCode · Top 7.63% · 1817 peak" },
   { icon: Briefcase, label: "Fresher · Class of 2026" },
-  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.64" },
+  { icon: GraduationCap, label: "B.Tech CSE · CGPA 8.65" },
 ];
 
 const storyParagraphs = [
-  "I'm a Computer Science fresher from Government Engineering College Bharatpur — a backend-focused software engineer who loves building things that scale. Node.js, Express, MongoDB, REST APIs, JWT auth — these are my daily tools.",
-  "Problem solving is my gym. 500+ problems solved across LeetCode, CodeChef & GFG — Easy, Medium, and Hard. Data structures and algorithms aren't just interview prep for me — they're how I think.",
-  "At Lighthouse Info Systems, I built an e-commerce backend system from scratch: 500+ concurrent requests, sub-200ms response time, 25-30% query performance boost through smart indexing. Real numbers, real impact.",
+  "I'm a backend-focused software engineer (B.Tech CSE, 2026, Government Engineering College Bharatpur) with internship experience building REST APIs, authentication and database-backed workflows in Node.js.",
+  "Beyond the internship I build systems that have to be correct under pressure: a real-time collaborative editor on Yjs CRDTs, and Agent Trust Lab, a Python system that puts an LLM behind signed-token authorization, backed by 86 automated tests.",
+  "Problem solving is my gym. 600+ DSA problems across LeetCode, CodeChef & GeeksforGeeks, top 7.63% on LeetCode with a 1817 peak contest rating. I also coordinated the Python Programming Club, running workshops, events and a hackathon for 50+ students.",
 ];
 
 const experiences = [
@@ -22,10 +22,10 @@ const experiences = [
     company: "Lighthouse Info Systems Pvt Ltd",
     period: "May 2025 – Jul 2025",
     bullets: [
-      "Developed backend modules for product management, cart operations, and order processing using Node.js, Express.js, and MongoDB.",
-      "Implemented secure JWT-based authentication and authorization while designing REST APIs and optimized database schemas for scalable application workflows.",
-      "Engineered order lifecycle management with validation, error handling, and reliable API integration for consistent backend functionality.",
-      "Technologies: Node.js, Express.js, MongoDB, Mongoose, JWT, REST APIs, Postman",
+      "Built backend modules for product management, cart operations and order processing in Node.js, Express.js and MongoDB, implementing the end-to-end order workflow.",
+      "Designed REST APIs with JWT authentication and role-based access control (RBAC) over structured MongoDB schemas.",
+      "Added input validation, structured error handling and API tests across endpoints for consistent behavior.",
+      "Technologies: Node.js, Express.js, MongoDB, JWT, RBAC, REST APIs",
     ],
   },
 ];
@@ -217,10 +217,10 @@ export default function About() {
                         B.Tech in Computer Science and Engineering
                       </p>
                       <p className="text-primary text-base font-semibold">
-                        Government Engineering College Bharatpur, Rajasthan
+                        Government Engineering College Bharatpur
                       </p>
                       <p className="text-muted-foreground text-sm mt-1">
-                        2022 – 2026 · CGPA 8.64
+                        2022 – 2026 · CGPA 8.65
                       </p>
                       <div className="flex flex-wrap gap-2 mt-3">
                         {[

@@ -11,33 +11,48 @@ export const techIconMap: Record<string, string> = {
   "Node.js":
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
   "Express.js":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+    "https://cdn.simpleicons.org/express/ffffff",
+  FastAPI:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+  "REST APIs": "",
+  WebSockets:
+    "https://cdn.simpleicons.org/socketdotio/ffffff",
+  "JWT Authentication": "",
+  RBAC: "",
+
+  // Databases
   MongoDB:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
   MySQL:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-  "REST APIs": "",
-  "JWT/RBAC": "",
+  SQLite:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
 
   // Frontend
-  HTML: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-  CSS: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-  "Tailwind CSS":
+  HTML5:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+  CSS3: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  TailwindCSS:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-  Bootstrap:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
   "React.js":
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-  Vite: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg",
 
-  // Databases & DevOps
+  // Cloud & Tools
+  "AWS ECS":
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
   Docker:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-  "Git/GitHub":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  Vercel:
+    "https://cdn.simpleicons.org/vercel/ffffff",
+  Render: "",
+  Git: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  Linux:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
   Postman:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
-  "AWS (EC2, S3)": "",
+  Playwright:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg",
+  "LLM API integration": "",
 
   // LeetCode (used in stats section)
   LeetCode: "https://cdn.simpleicons.org/leetcode/FFA116",
