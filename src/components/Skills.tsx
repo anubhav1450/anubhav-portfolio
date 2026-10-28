@@ -289,20 +289,6 @@ function LeetCodeSection() {
                   >
                     View on LeetCode ↗
                   </a>
-                  <a
-                    href="https://codolio.com/profile/Anubhav2501"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold px-3 py-1.5 rounded-full transition-all hover:scale-105"
-                    style={{
-                      background: "transparent",
-                      color: "#FFA116",
-                      border: "1px solid #FFA116",
-                    }}
-                    data-ocid="skills.leetcode.link"
-                  >
-                    View Coding Profile ↗
-                  </a>
                 </div>
               </div>
 
